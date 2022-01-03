@@ -67,15 +67,13 @@ def callback():
 
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=event.message.text)
-        )
-        
-        line_bot_api.reply_message(
-            event.reply_token,
-            ImageSendMessage(
-                original_content_url="https://serene-stream-27454.herokuapp.com/static/test.png",
-                preview_image_url="https://serene-stream-27454.herokuapp.com/static/test.png"
-            )
+            [
+                TextSendMessage(text=event.message.text),
+                ImageSendMessage(
+                    original_content_url="https://serene-stream-27454.herokuapp.com/static/test.png",
+                    preview_image_url="https://serene-stream-27454.herokuapp.com/static/test.png"
+                )
+            ]
         )
 
     return 'OK'
