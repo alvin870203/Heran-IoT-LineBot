@@ -24,9 +24,7 @@ from linebot import (
 from linebot.exceptions import (
     InvalidSignatureError
 )
-from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, ImageSendMessage
-)
+from linebot.models import *
 
 app = Flask(__name__)
 
@@ -61,30 +59,50 @@ def callback():
 
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
-        if not isinstance(event, MessageEvent):
-            continue
-        if not isinstance(event.message, TextMessage):
-            continue
-
-        text = event.message.text
-        if text == "哈囉":
-            line_bot_api.reply_message(
-                event.reply_token,
-                [
-                    TextSendMessage(text=event.message.text),
-                    ImageSendMessage(
-                        original_content_url="https://serene-stream-27454.herokuapp.com/static/test.png",
-                        preview_image_url="https://serene-stream-27454.herokuapp.com/static/test.png"
+        if isinstance(event, MessageEvent) and isinstance(event.message, TextMessage):  # text message
+            text = event.message.text
+            if text == "哈囉":
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    [
+                        TextSendMessage(text=event.message.text),
+                        ImageSendMessage(
+                            original_content_url="https://serene-stream-27454.herokuapp.com/static/test.png",
+                            preview_image_url="https://serene-stream-27454.herokuapp.com/static/test.png"
+                        )
+                    ]
+                )
+            elif text == "電風扇控制":
+                buttons_template_message = TemplateSendMessage(
+                    alt_text='Buttons template',
+                    template=ButtonsTemplate(
+                        thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/禾聯IoTapp_電扇.png',
+                        title='Menu',
+                        text='Please select',
+                        actions=[
+                            PostbackAction(
+                                label='postback',
+                                display_text='postback text',
+                                data='action=buy&itemid=1'
+                            ),
+                            MessageAction(
+                                label='message',
+                                text='message text'
+                            ),
+                            URIAction(
+                                label='uri',
+                                uri='http://www.google.com/'
+                            )
+                        ]
                     )
-                ]
-            )
-        else:
-            line_bot_api.reply_message(
-                event.reply_token,
-                [
-                    TextSendMessage(text="Wrong keywords"),
-                ]
-            )
+                )
+            else:
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    [
+                        TextSendMessage(text="Wrong keywords"),
+                    ]
+                )
 
     return 'OK'
 
