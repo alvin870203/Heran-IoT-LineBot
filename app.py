@@ -225,7 +225,7 @@ def update_devces_state():
         }]
     }
     headers = {"Authorization": "Bearer " + access_token}
-    r = requests.post(url, data=json.dump(body), headers=headers)
+    r = requests.post(url, data=json.dumps(body), headers=headers)
     r_json = r.json()
     print(r_json)
     
