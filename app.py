@@ -15,6 +15,8 @@
 
 import os
 import sys
+import json
+import requests
 from argparse import ArgumentParser
 
 from flask import Flask, request, abort
@@ -40,6 +42,18 @@ if channel_access_token is None:
 
 line_bot_api = LineBotApi(channel_access_token)
 parser = WebhookParser(channel_secret)
+
+# State of the devices
+# - Fan
+fan_on = None  # True, False
+fan_speed = None  # int
+# - A/C
+ac_on = None  # True, False
+ac_set_temp = None  # int
+ac_ambient_temp = None  # int 
+# - A/F
+af_on = None  # True, False
+af_pm25 = None  # float
 
 
 @app.route("/callback", methods=['POST'])
@@ -73,6 +87,7 @@ def callback():
                     ]
                 )
             elif text == "電風扇控制":
+                update_devces_state()
                 buttons_message_fan = TemplateSendMessage(
                     alt_text='Buttons template',
                     template=ButtonsTemplate(
@@ -98,7 +113,7 @@ def callback():
                         ]
                     )
                 )
-                buttons_message_vaccum = TemplateSendMessage(
+                buttons_message_vacuum = TemplateSendMessage(
                     alt_text='Buttons template',
                     template=ButtonsTemplate(
                         thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/掃地機.jpg',
@@ -177,7 +192,7 @@ def callback():
                     event.reply_token,
                     [
                         buttons_message_fan,
-                        buttons_message_vaccum,
+                        buttons_message_vacuum,
                         buttons_message_ac,
                         buttons_message_af
                     ]
@@ -191,6 +206,30 @@ def callback():
                 )
 
     return 'OK'
+
+
+def update_devces_state():
+    access_token = os.getenv('access_token', None)
+    url = "https://iot.jowinwin.com/iot_tds/control.php"
+    body = {
+        "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf",
+        "inputs": [{
+            "intent": "action.devices.QUERY",
+            "payload": {
+                "devices": [
+                    {"id": "a00abf1dd7e7"},  # A/C
+                    {"id": "a00abf1ddb09"},  # A/F
+                    {"id": "a00abf394b1c"}   # fan
+                ]
+            }
+        }]
+    }
+    headers = {"Authorization": "Bearer " + access_token}
+    r = requests.post(url, data=body, headers=headers)
+    r_json = r.json()
+    print(r_json)
+    
+
 
 
 if __name__ == "__main__":
