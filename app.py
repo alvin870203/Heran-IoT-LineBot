@@ -232,18 +232,21 @@ def update_devces_state():
     }
     r = requests.post(url, data=json.dumps(body), headers=headers)
     r_dict = r.json()
-    # print(r_dict)
+    print(r_dict)
     for device in r_dict["payload"]["devices"]:
         if fan_id in device.keys():
             fan_on = device[fan_id]["on"]
             fan_speed = device[fan_id]["currentFanSpeedSetting"]
+            print(f"Update fan: {fan_on=}, {fan_speed=}")
         elif ac_id in device.keys():
             ac_on = device[ac_id]["on"]
             ac_set_temp = device[ac_id]["thermostatTemperatureSetpoint"]
             ac_ambient_temp = device[ac_id]["thermostatTemperatureAmbient"]
+            print(f"Update ac: {ac_on=}, {ac_set_temp=}, {ac_ambient_temp}")
         elif af_id in device.keys():
             af_on = device[af_id]["on"]
             af_pm25 = device[af_id]["currentSensorStateData"][0]["rawValue"]
+            print(f"Update af: {af_on=}, {af_pm25}")
         else:
             print(f"Unknown device: {device.keys()}")
 
