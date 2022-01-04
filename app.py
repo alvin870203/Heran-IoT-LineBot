@@ -73,10 +73,87 @@ def callback():
                     ]
                 )
             elif text == "電風扇控制":
-                buttons_template_message = TemplateSendMessage(
+                buttons_message_fan = TemplateSendMessage(
                     alt_text='Buttons template',
                     template=ButtonsTemplate(
-                        thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/禾聯IoTapp_電扇.png',
+                        thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/電風扇.jpg',
+                        image_aspect_ratio='square',
+                        image_size='contain',
+                        title='Menu',
+                        text='Please select',
+                        actions=[
+                            PostbackAction(
+                                label='postback',
+                                display_text='postback text',
+                                data='action=buy&itemid=1'
+                            ),
+                            MessageAction(
+                                label='message',
+                                text='message text'
+                            ),
+                            URIAction(
+                                label='uri',
+                                uri='http://www.google.com/'
+                            )
+                        ]
+                    )
+                )
+                buttons_message_vaccum = TemplateSendMessage(
+                    alt_text='Buttons template',
+                    template=ButtonsTemplate(
+                        thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/掃地機.jpg',
+                        image_aspect_ratio='square',
+                        image_size='contain',
+                        title='Menu',
+                        text='Please select',
+                        actions=[
+                            PostbackAction(
+                                label='postback',
+                                display_text='postback text',
+                                data='action=buy&itemid=1'
+                            ),
+                            MessageAction(
+                                label='message',
+                                text='message text'
+                            ),
+                            URIAction(
+                                label='uri',
+                                uri='http://www.google.com/'
+                            )
+                        ]
+                    )
+                )
+                buttons_message_ac = TemplateSendMessage(
+                    alt_text='Buttons template',
+                    template=ButtonsTemplate(
+                        thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/冷氣.jpg',
+                        image_aspect_ratio='square',
+                        image_size='contain',
+                        title='Menu',
+                        text='Please select',
+                        actions=[
+                            PostbackAction(
+                                label='postback',
+                                display_text='postback text',
+                                data='action=buy&itemid=1'
+                            ),
+                            MessageAction(
+                                label='message',
+                                text='message text'
+                            ),
+                            URIAction(
+                                label='uri',
+                                uri='http://www.google.com/'
+                            )
+                        ]
+                    )
+                )
+                buttons_message_af = TemplateSendMessage(
+                    alt_text='Buttons template',
+                    template=ButtonsTemplate(
+                        thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/空氣清淨機.jpg',
+                        image_aspect_ratio='square',
+                        image_size='contain',
                         title='Menu',
                         text='Please select',
                         actions=[
@@ -99,7 +176,10 @@ def callback():
                 line_bot_api.reply_message(
                     event.reply_token,
                     [
-                        buttons_template_message
+                        buttons_message_fan,
+                        buttons_message_vaccum,
+                        buttons_message_ac,
+                        buttons_message_af
                     ]
                 )
             else:
