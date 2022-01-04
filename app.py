@@ -217,6 +217,7 @@ def callback():
 
 
 def update_devces_state():
+    global fan_on, fan_speed, ac_on, ac_set_temp, ac_ambient_temp, af_on, af_pm25
     body = {
         "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf",
         "inputs": [{
@@ -235,18 +236,18 @@ def update_devces_state():
     print(r_dict)
     for device in r_dict["payload"]["devices"]:
         if fan_id in device.keys():
-            fan_on = device[fan_id]["on"]
-            fan_speed = device[fan_id]["currentFanSpeedSetting"]
+            fan_on = bool(device[fan_id]["on"])
+            fan_speed = int(device[fan_id]["currentFanSpeedSetting"])
             print(f"Update fan: {fan_on=}, {fan_speed=}")
         elif ac_id in device.keys():
-            ac_on = device[ac_id]["on"]
-            ac_set_temp = device[ac_id]["thermostatTemperatureSetpoint"]
-            ac_ambient_temp = device[ac_id]["thermostatTemperatureAmbient"]
-            print(f"Update ac: {ac_on=}, {ac_set_temp=}, {ac_ambient_temp}")
+            ac_on = bool(device[ac_id]["on"])
+            ac_set_temp = int(device[ac_id]["thermostatTemperatureSetpoint"])
+            ac_ambient_temp = int(device[ac_id]["thermostatTemperatureAmbient"])
+            print(f"Update ac: {ac_on=}, {ac_set_temp=}, {ac_ambient_temp=}")
         elif af_id in device.keys():
-            af_on = device[af_id]["on"]
-            af_pm25 = device[af_id]["currentSensorStateData"][0]["rawValue"]
-            print(f"Update af: {af_on=}, {af_pm25}")
+            af_on = bool(device[af_id]["on"])
+            af_pm25 = float(device[af_id]["currentSensorStateData"][0]["rawValue"])  #FIXME: float or int ?
+            print(f"Update af: {af_on=}, {af_pm25=}")
         else:
             print(f"Unknown device: {device.keys()}")
 
