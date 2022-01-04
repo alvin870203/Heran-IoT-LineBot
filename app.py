@@ -51,6 +51,7 @@ def callback():
     # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
+    print("Request body: " + body)
 
     # parse webhook body
     try:
@@ -65,16 +66,25 @@ def callback():
         if not isinstance(event.message, TextMessage):
             continue
 
-        line_bot_api.reply_message(
-            event.reply_token,
-            [
-                TextSendMessage(text=event.message.text),
-                ImageSendMessage(
-                    original_content_url="https://serene-stream-27454.herokuapp.com/static/test.png",
-                    preview_image_url="https://serene-stream-27454.herokuapp.com/static/test.png"
-                )
-            ]
-        )
+        text = event.message.text
+        if text == "哈囉":
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    TextSendMessage(text=event.message.text),
+                    ImageSendMessage(
+                        original_content_url="https://serene-stream-27454.herokuapp.com/static/test.png",
+                        preview_image_url="https://serene-stream-27454.herokuapp.com/static/test.png"
+                    )
+                ]
+            )
+        else:
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    TextSendMessage(text="Wrong keywords"),
+                ]
+            )
 
     return 'OK'
 
