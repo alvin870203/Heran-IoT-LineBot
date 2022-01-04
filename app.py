@@ -102,8 +102,8 @@ def callback():
                         thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/電風扇.jpg',
                         image_aspect_ratio='rectangle',
                         image_size='contain',
-                        title='Menu',
-                        text='Please select',
+                        title='電風扇控制介面',
+                        text=f"目前狀態: {'開' if fan_on is True else '關'}; 風速: {fan_speed}",
                         actions=[
                             PostbackAction(
                                 label='開機/關機',
@@ -133,8 +133,8 @@ def callback():
                         thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/掃地機.jpg',
                         image_aspect_ratio='rectangle',
                         image_size='contain',
-                        title='Menu',
-                        text='Please select',
+                        title='掃地機控制介面',
+                        text=f"目前狀態: 未連線",
                         actions=[
                             PostbackAction(
                                 label='開機/關機',
@@ -154,8 +154,8 @@ def callback():
                         thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/冷氣.jpg',
                         image_aspect_ratio='rectangle',
                         image_size='contain',
-                        title='Menu',
-                        text='Please select',
+                        title='冷氣控制介面',
+                        text=f"目前狀態: {'開' if ac_on is True else '關'}; 設定溫度: {ac_set_temp}; 環境溫度: {ac_ambient_temp}",
                         actions=[
                             PostbackAction(
                                 label='開機/關機',
@@ -185,8 +185,8 @@ def callback():
                         thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/空氣清淨機.jpg',
                         image_aspect_ratio='rectangle',
                         image_size='contain',
-                        title='Menu',
-                        text='Please select',
+                        title='空氣清淨機控制介面',
+                        text=f"目前狀態: {'開' if af_on is True else '關'}; PM2.5: {af_pm25}",
                         actions=[
                             PostbackAction(
                                 label='開機/關機',
@@ -210,7 +210,7 @@ def callback():
         elif isinstance(event, PostbackEvent):  # postback event
             data = event.postback.data
             if data == "fan_onoff":
-                fan_on_off()
+                fan_on_off(event.reply_token)
         
         
     return 'OK'
@@ -252,7 +252,7 @@ def update_devces_state():
             print(f"Unknown device: {device.keys()}")
 
 
-def fan_on_off():
+def fan_on_off(reply_token):
     if fan_on is True:
         body = {
             "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf",
@@ -274,6 +274,9 @@ def fan_on_off():
         r = requests.post(url, data=json.dumps(body), headers=headers)
         r_dict = r.json()
         print(r_dict)
+        line_bot_api.reply_message(
+            reply_token, TextSendMessage(text="電扇已關閉")
+        )
     elif fan_on is False:
         body = {
             "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf",
@@ -295,6 +298,9 @@ def fan_on_off():
         r = requests.post(url, data=json.dumps(body), headers=headers)
         r_dict = r.json()
         print(r_dict)
+        line_bot_api.reply_message(
+            reply_token, TextSendMessage(text="電扇已開啟")
+        )
     else:
         print(f"ERROR: wrong fan_on value = {fan_on}")
 
