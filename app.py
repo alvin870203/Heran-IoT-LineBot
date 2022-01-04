@@ -77,7 +77,7 @@ def callback():
                     alt_text='Buttons template',
                     template=ButtonsTemplate(
                         thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/電風扇.jpg',
-                        image_aspect_ratio='square',
+                        image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='Menu',
                         text='Please select',
@@ -102,7 +102,7 @@ def callback():
                     alt_text='Buttons template',
                     template=ButtonsTemplate(
                         thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/掃地機.jpg',
-                        image_aspect_ratio='square',
+                        image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='Menu',
                         text='Please select',
@@ -127,7 +127,7 @@ def callback():
                     alt_text='Buttons template',
                     template=ButtonsTemplate(
                         thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/冷氣.jpg',
-                        image_aspect_ratio='square',
+                        image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='Menu',
                         text='Please select',
@@ -152,7 +152,7 @@ def callback():
                     alt_text='Buttons template',
                     template=ButtonsTemplate(
                         thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/空氣清淨機.jpg',
-                        image_aspect_ratio='square',
+                        image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='Menu',
                         text='Please select',
