@@ -43,15 +43,22 @@ if channel_access_token is None:
 line_bot_api = LineBotApi(channel_access_token)
 parser = WebhookParser(channel_secret)
 
+access_token = os.getenv('access_token', None)  # token for IoT appliances
+url = "https://iot.jowinwin.com/iot_tds/control.php"  # url for appliances' control
+headers = {"Authorization": "Bearer " + access_token}  # OAuth2.0 url for appliances' control
+
 # State of the devices
 # - Fan
+fan_id = "a00abf394b1c"
 fan_on = None  # True, False
 fan_speed = None  # int
 # - A/C
+ac_id = "a00abf1dd7e7"
 ac_on = None  # True, False
 ac_set_temp = None  # int
 ac_ambient_temp = None  # int 
 # - A/F
+af_id = "a00abf1ddb09"
 af_on = None  # True, False
 af_pm25 = None  # float
 
@@ -73,9 +80,11 @@ def callback():
 
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
+        update_devces_state()        
+        
         if isinstance(event, MessageEvent) and isinstance(event.message, TextMessage):  # text message
             text = event.message.text
-            if text == "哈囉":
+            if text == "測試":
                 line_bot_api.reply_message(
                     event.reply_token,
                     [
@@ -86,8 +95,7 @@ def callback():
                         )
                     ]
                 )
-            elif text == "電風扇控制":
-                update_devces_state()
+            elif text == "電風扇":
                 buttons_message_fan = TemplateSendMessage(
                     alt_text='Buttons template',
                     template=ButtonsTemplate(
@@ -98,21 +106,27 @@ def callback():
                         text='Please select',
                         actions=[
                             PostbackAction(
-                                label='postback',
-                                display_text='postback text',
-                                data='action=buy&itemid=1'
+                                label='開機/關機',
+                                # display_text='postback text',
+                                data='fan_onoff'
                             ),
-                            MessageAction(
-                                label='message',
-                                text='message text'
+                            PostbackAction(
+                                label='增強風量',
+                                # display_text='postback text',
+                                data='fan_speed_up'
                             ),
-                            URIAction(
-                                label='uri',
-                                uri='http://www.google.com/'
+                            PostbackAction(
+                                label='降低風量',
+                                # display_text='postback text',
+                                data='fan_speed_down'
                             )
                         ]
                     )
                 )
+                line_bot_api.reply_message(
+                    event.reply_token, [buttons_message_fan]
+                )
+            elif text == "掃地機":
                 buttons_message_vacuum = TemplateSendMessage(
                     alt_text='Buttons template',
                     template=ButtonsTemplate(
@@ -123,21 +137,17 @@ def callback():
                         text='Please select',
                         actions=[
                             PostbackAction(
-                                label='postback',
-                                display_text='postback text',
-                                data='action=buy&itemid=1'
+                                label='開機/關機',
+                                # display_text='postback text',
+                                data='vacuum_onoff'
                             ),
-                            MessageAction(
-                                label='message',
-                                text='message text'
-                            ),
-                            URIAction(
-                                label='uri',
-                                uri='http://www.google.com/'
-                            )
                         ]
                     )
                 )
+                line_bot_api.reply_message(
+                    event.reply_token, [buttons_message_vacuum]
+                )
+            elif text == "冷氣":
                 buttons_message_ac = TemplateSendMessage(
                     alt_text='Buttons template',
                     template=ButtonsTemplate(
@@ -148,21 +158,27 @@ def callback():
                         text='Please select',
                         actions=[
                             PostbackAction(
-                                label='postback',
-                                display_text='postback text',
-                                data='action=buy&itemid=1'
+                                label='開機/關機',
+                                # display_text='postback text',
+                                data='ac_onoff'
                             ),
-                            MessageAction(
-                                label='message',
-                                text='message text'
+                            PostbackAction(
+                                label='溫度升',
+                                # display_text='postback text',
+                                data='ac_temp_up'
                             ),
-                            URIAction(
-                                label='uri',
-                                uri='http://www.google.com/'
+                            PostbackAction(
+                                label='溫度降',
+                                # display_text='postback text',
+                                data='ac_temp_down'
                             )
                         ]
                     )
                 )
+                line_bot_api.reply_message(
+                    event.reply_token, [buttons_message_ac]
+                )
+            elif text == "空氣清淨機":
                 buttons_message_af = TemplateSendMessage(
                     alt_text='Buttons template',
                     template=ButtonsTemplate(
@@ -173,63 +189,110 @@ def callback():
                         text='Please select',
                         actions=[
                             PostbackAction(
-                                label='postback',
-                                display_text='postback text',
-                                data='action=buy&itemid=1'
+                                label='開機/關機',
+                                # display_text='postback text',
+                                data='af_onoff'
                             ),
-                            MessageAction(
-                                label='message',
-                                text='message text'
-                            ),
-                            URIAction(
-                                label='uri',
-                                uri='http://www.google.com/'
-                            )
                         ]
                     )
                 )
                 line_bot_api.reply_message(
-                    event.reply_token,
-                    [
-                        buttons_message_fan,
-                        buttons_message_vacuum,
-                        buttons_message_ac,
-                        buttons_message_af
-                    ]
+                    event.reply_token, [buttons_message_af]
+                )
+            elif text == "除濕機":
+                line_bot_api.reply_message(
+                    event.reply_token, [TextSendMessage(text="尚未配對"+text)]
                 )
             else:
                 line_bot_api.reply_message(
-                    event.reply_token,
-                    [
-                        TextSendMessage(text="Wrong keywords"),
-                    ]
+                    event.reply_token, [TextSendMessage(text="無此功能")]
                 )
-
+        elif isinstance(event, PostbackEvent):  # postback event
+            data = event.postback.data
+            if data == "fan_onoff":
+                fan_on_off()
+        
+        
     return 'OK'
 
 
 def update_devces_state():
-    access_token = os.getenv('access_token', None)
-    url = "https://iot.jowinwin.com/iot_tds/control.php"
     body = {
         "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf",
         "inputs": [{
             "intent": "action.devices.QUERY",
             "payload": {
                 "devices": [
-                    {"id": "a00abf1dd7e7"},  # A/C
-                    {"id": "a00abf1ddb09"},  # A/F
-                    {"id": "a00abf394b1c"}   # fan
+                    {"id": ac_id},  # A/C
+                    {"id": af_id},  # A/F
+                    {"id": fan_id}   # fan
                 ]
             }
         }]
     }
-    headers = {"Authorization": "Bearer " + access_token}
     r = requests.post(url, data=json.dumps(body), headers=headers)
-    r_json = r.json()
-    print(r_json)
-    
+    r_dict = r.json()
+    # print(r_dict)
+    for device in r_dict["payload"]["devices"]:
+        if fan_id in device.keys():
+            fan_on = device[fan_id]["on"]
+            fan_speed = device[fan_id]["currentFanSpeedSetting"]
+        elif ac_id in device.keys():
+            ac_on = device[ac_id]["on"]
+            ac_set_temp = device[ac_id]["thermostatTemperatureSetpoint"]
+            ac_ambient_temp = device[ac_id]["thermostatTemperatureAmbient"]
+        elif af_id in device.keys():
+            af_on = device[af_id]["on"]
+            af_pm25 = device[af_id]["currentSensorStateData"][0]["rawValue"]
+        else:
+            print(f"Unknown device: {device.keys()}")
 
+
+def fan_on_off():
+    if fan_on is True:
+        body = {
+            "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf",
+            "inputs": [{
+                "intent": "action.devices.EXECUTE",
+                "payload": {
+                    "commands": [{
+                        "devices": [{
+                            "id": "a00abf394b1c"
+                        }],
+                        "execution": [{
+                            "command": "action.devices.commands.OnOff",
+                            "params": {"on": False}
+                        }]
+                    }]
+                }
+            }]
+        }
+        r = requests.post(url, data=json.dumps(body), headers=headers)
+        r_dict = r.json()
+        print(r_dict)
+    elif fan_on is False:
+        body = {
+            "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf",
+            "inputs": [{
+                "intent": "action.devices.EXECUTE",
+                "payload": {
+                    "commands": [{
+                        "devices": [{
+                            "id": "a00abf394b1c"
+                        }],
+                        "execution": [{
+                            "command": "action.devices.commands.OnOff",
+                            "params": {"on": True}
+                        }]
+                    }]
+                }
+            }]
+        }
+        r = requests.post(url, data=json.dumps(body), headers=headers)
+        r_dict = r.json()
+        print(r_dict)
+    else:
+        print(f"ERROR: wrong fan_on value = {fan_on}")
 
 
 if __name__ == "__main__":
