@@ -61,6 +61,9 @@ ac_ambient_temp = None  # int
 af_id = "a00abf1ddb09"
 af_on = None  # True, False
 af_pm25 = None  # float
+# - vacuum - FIXME: no vacuum yet, can't update state, temporally init as off
+vacuum_id = "no_id_yet"
+vacuum_on = False  # remember to update state manually
 
 
 @app.route("/callback", methods=['POST'])
@@ -134,10 +137,10 @@ def callback():
                         image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='掃地機控制介面',
-                        text=f"目前狀態: 未連線",
+                        text=f"目前狀態: {'清掃中' if vacuum_on is True else '已回家充電'}",
                         actions=[
                             PostbackAction(
-                                label='開機/關機',
+                                label='回家充電/開始清掃',
                                 # display_text='postback text',
                                 data='vacuum_onoff'
                             ),
@@ -211,6 +214,17 @@ def callback():
             data = event.postback.data
             if data == "fan_onoff":
                 fan_on_off(event.reply_token)
+            elif data == "vacuum_onoff":
+                vacuum_on_off(event.reply_token)
+            elif data == "ac_onoff":
+                ac_on_off(event.reply_token)
+            elif data == "af_onoff":
+                af_on_off(event.reply_token)
+            else:
+                line_bot_api.reply_message(
+                    event.reply_token, [TextSendMessage(text="無此功能")]
+                )
+                
         
         
     return 'OK'
@@ -227,6 +241,7 @@ def update_devces_state():
                     {"id": ac_id},  # A/C
                     {"id": af_id},  # A/F
                     {"id": fan_id}   # fan
+                    #FIXME: can't update vacuum state yet
                 ]
             }
         }]
@@ -235,6 +250,7 @@ def update_devces_state():
     r_dict = r.json()
     print(r_dict)
     for device in r_dict["payload"]["devices"]:
+        #FIXME: can't update vacuum state yet
         if fan_id in device.keys():
             fan_on = bool(device[fan_id]["on"])
             fan_speed = int(device[fan_id]["currentFanSpeedSetting"])
@@ -253,24 +269,11 @@ def update_devces_state():
 
 
 def fan_on_off(reply_token):
+    with open("static/body_onoff.json") as f:
+            body = json.load(f)
+    body["inputs"][0]["payload"]["commands"][0]["devices"][0]["id"] = fan_id
     if fan_on is True:
-        body = {
-            "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf",
-            "inputs": [{
-                "intent": "action.devices.EXECUTE",
-                "payload": {
-                    "commands": [{
-                        "devices": [{
-                            "id": "a00abf394b1c"
-                        }],
-                        "execution": [{
-                            "command": "action.devices.commands.OnOff",
-                            "params": {"on": False}
-                        }]
-                    }]
-                }
-            }]
-        }
+        body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"]["on"] = False
         r = requests.post(url, data=json.dumps(body), headers=headers)
         r_dict = r.json()
         print(r_dict)
@@ -278,23 +281,7 @@ def fan_on_off(reply_token):
             reply_token, TextSendMessage(text="電扇已關閉")
         )
     elif fan_on is False:
-        body = {
-            "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf",
-            "inputs": [{
-                "intent": "action.devices.EXECUTE",
-                "payload": {
-                    "commands": [{
-                        "devices": [{
-                            "id": "a00abf394b1c"
-                        }],
-                        "execution": [{
-                            "command": "action.devices.commands.OnOff",
-                            "params": {"on": True}
-                        }]
-                    }]
-                }
-            }]
-        }
+        body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"]["on"] = True
         r = requests.post(url, data=json.dumps(body), headers=headers)
         r_dict = r.json()
         print(r_dict)
@@ -303,6 +290,85 @@ def fan_on_off(reply_token):
         )
     else:
         print(f"ERROR: wrong fan_on value = {fan_on}")
+
+
+def ac_on_off(reply_token):
+    with open("static/body_onoff.json") as f:
+            body = json.load(f)
+    body["inputs"][0]["payload"]["commands"][0]["devices"][0]["id"] = ac_id
+    if ac_on is True:
+        body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"]["on"] = False
+        r = requests.post(url, data=json.dumps(body), headers=headers)
+        r_dict = r.json()
+        print(r_dict)
+        line_bot_api.reply_message(
+            reply_token, TextSendMessage(text="冷氣已關閉")
+        )
+    elif ac_on is False:
+        body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"]["on"] = True
+        r = requests.post(url, data=json.dumps(body), headers=headers)
+        r_dict = r.json()
+        print(r_dict)
+        line_bot_api.reply_message(
+            reply_token, TextSendMessage(text="冷氣已開啟")
+        )
+    else:
+        print(f"ERROR: wrong ac_on value = {ac_on}")
+
+
+def af_on_off(reply_token):
+    with open("static/body_onoff.json") as f:
+            body = json.load(f)
+    body["inputs"][0]["payload"]["commands"][0]["devices"][0]["id"] = af_id
+    if af_on is True:
+        body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"]["on"] = False
+        #FIXME: af control is not implemented yet
+        # r = requests.post(url, data=json.dumps(body), headers=headers)
+        # r_dict = r.json()
+        # print(r_dict)
+        line_bot_api.reply_message(
+            reply_token, TextSendMessage(text="空氣清淨機已關閉")
+        )
+    elif af_on is False:
+        body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"]["on"] = True
+        #FIXME: af control is not implemented yet
+        # r = requests.post(url, data=json.dumps(body), headers=headers)
+        # r_dict = r.json()
+        # print(r_dict)
+        line_bot_api.reply_message(
+            reply_token, TextSendMessage(text="空氣清淨機已開啟")
+        )
+    else:
+        print(f"ERROR: wrong af_on value = {af_on}")
+
+
+def vacuum_on_off(reply_token):
+    with open("static/body_onoff.json") as f:
+            body = json.load(f)
+    body["inputs"][0]["payload"]["commands"][0]["devices"][0]["id"] = vacuum_id
+    global vacuum_on
+    if vacuum_on is True:
+        body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"]["on"] = False
+        #FIXME: vacuum state and control are not implemented yet
+        # r = requests.post(url, data=json.dumps(body), headers=headers)
+        # r_dict = r.json()
+        # print(r_dict)
+        vacuum_on = False
+        line_bot_api.reply_message(
+            reply_token, TextSendMessage(text="掃地機已回家")
+        )
+    elif vacuum_on is False:
+        body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"]["on"] = True
+        #FIXME: vacuum state and control are not implemented yet
+        # r = requests.post(url, data=json.dumps(body), headers=headers)
+        # r_dict = r.json()
+        # print(r_dict)
+        vacuum_on = True
+        line_bot_api.reply_message(
+            reply_token, TextSendMessage(text="掃地機開始打掃")
+        )
+    else:
+        print(f"ERROR: wrong af_on value = {vacuum_on}")
 
 
 if __name__ == "__main__":
