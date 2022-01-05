@@ -1,0 +1,406 @@
+{
+    "type": "bubble",
+    "header": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+            {
+                "type": "text",
+                "text": "回家模式設定介面",
+                "size": "xxl",
+                "align": "center",
+                "weight": "bold",
+                "decoration": "none",
+                "offsetBottom": "md",
+                "color": "#FFFFFF"
+            }
+        ],
+        "spacing": "sm",
+        "paddingTop": "xxl",
+        "paddingBottom": "none",
+        "paddingStart": "sm",
+        "paddingEnd": "sm",
+        "backgroundColor": "#555555"
+    },
+    "hero": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+            {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                    {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                            {
+                                "type": "text",
+                                "text": "ON",
+                                "color": "#FFFFFF",
+                                "size": "xxl",
+                                "wrap": true,
+                                "weight": "bold",
+                                "decoration": "none",
+                                "align": "center",
+                                "flex": 1
+                            }
+                        ],
+                        "backgroundColor": "#0a8594"
+                    },
+                    {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                            {
+                                "type": "text",
+                                "text": "OFF",
+                                "color": "#FFFFFF",
+                                "size": "xxl",
+                                "wrap": true,
+                                "weight": "bold",
+                                "align": "center",
+                                "offsetTop": "none",
+                                "flex": 1
+                            }
+                        ],
+                        "backgroundColor": "#aaaaaa",
+                        "cornerRadius": "none"
+                    }
+                ],
+                "cornerRadius": "md",
+                "spacing": "xs"
+            }
+        ],
+        "spacing": "sm",
+        "paddingTop": "md",
+        "paddingBottom": "none",
+        "paddingStart": "sm",
+        "paddingEnd": "sm"
+    },
+    "body": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+            {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                    {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                    {
+                                        "type": "text",
+                                        "text": "冷氣",
+                                        "align": "center",
+                                        "size": "md",
+                                        "offsetTop": "md",
+                                        "weight": "bold"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "on / 22°C",
+                                        "size": "sm",
+                                        "color": "#888888",
+                                        "align": "center",
+                                        "offsetTop": "sm"
+                                    },
+                                    {
+                                        "type": "separator",
+                                        "margin": "md",
+                                        "color": "#dcdede"
+                                    },
+                                    {
+                                        "type": "image",
+                                        "url": "https://www.csie.ntu.edu.tw/~r09921006/ac.png",
+                                        "aspectMode": "fit",
+                                        "aspectRatio": "1.5:1",
+                                        "action": {
+                                            "type": "postback",
+                                            "data": "adjust_ac"
+                                        }
+                                    },
+                                    {
+                                        "type": "image",
+                                        "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
+                                        "size": "18px",
+                                        "position": "absolute",
+                                        "offsetTop": "2px",
+                                        "offsetEnd": "2px",
+                                        "action": {
+                                            "type": "postback",
+                                            "data": "remove_ac"
+                                        }
+                                    }
+                                ],
+                                "borderColor": "#888888",
+                                "borderWidth": "medium",
+                                "cornerRadius": "md",
+                                "backgroundColor": "#FFFFFFcc"
+                            },
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                    {
+                                        "type": "text",
+                                        "text": "電扇",
+                                        "align": "center",
+                                        "size": "md",
+                                        "offsetTop": "md",
+                                        "weight": "bold"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "on / 風速 5 / 固定",
+                                        "size": "sm",
+                                        "color": "#888888",
+                                        "align": "center",
+                                        "offsetTop": "sm"
+                                    },
+                                    {
+                                        "type": "separator",
+                                        "margin": "md",
+                                        "color": "#dcdede"
+                                    },
+                                    {
+                                        "type": "image",
+                                        "url": "https://www.csie.ntu.edu.tw/~r09921006/fan.png",
+                                        "aspectMode": "fit",
+                                        "aspectRatio": "1.5:1",
+                                        "action": {
+                                            "type": "postback",
+                                            "data": "adjust_fan"
+                                        }
+                                    },
+                                    {
+                                        "type": "image",
+                                        "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
+                                        "size": "18px",
+                                        "position": "absolute",
+                                        "offsetTop": "2px",
+                                        "offsetEnd": "2px",
+                                        "action": {
+                                            "type": "postback",
+                                            "data": "remove_fan"
+                                        }
+                                    }
+                                ],
+                                "borderColor": "#888888",
+                                "borderWidth": "medium",
+                                "cornerRadius": "md",
+                                "backgroundColor": "#FFFFFFcc"
+                            },
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                    {
+                                        "type": "text",
+                                        "text": "新增",
+                                        "align": "center",
+                                        "size": "md",
+                                        "offsetTop": "md",
+                                        "weight": "bold"
+                                    },
+                                    {
+                                        "type": "separator",
+                                        "margin": "md",
+                                        "color": "#dcdede"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "+",
+                                        "size": "4xl",
+                                        "color": "#4265b4",
+                                        "weight": "bold",
+                                        "align": "center",
+                                        "gravity": "center"
+                                    }
+                                ],
+                                "borderColor": "#888888",
+                                "borderWidth": "medium",
+                                "cornerRadius": "md",
+                                "backgroundColor": "#FFFFFFcc",
+                                "action": {
+                                    "type": "postback",
+                                    "data": "add_on"
+                                }
+                            }
+                        ],
+                        "spacing": "sm",
+                        "borderWidth": "light",
+                        "backgroundColor": "#0a859488",
+                        "cornerRadius": "md",
+                        "paddingAll": "sm"
+                    },
+                    {
+                        "type": "separator",
+                        "color": "#555555"
+                    },
+                    {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                    {
+                                        "type": "text",
+                                        "text": "清淨機",
+                                        "align": "center",
+                                        "size": "md",
+                                        "offsetTop": "md",
+                                        "weight": "bold"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "off / 3 PM2.5",
+                                        "size": "sm",
+                                        "color": "#888888",
+                                        "align": "center",
+                                        "offsetTop": "sm"
+                                    },
+                                    {
+                                        "type": "separator",
+                                        "margin": "md",
+                                        "color": "#dcdede"
+                                    },
+                                    {
+                                        "type": "image",
+                                        "url": "https://www.csie.ntu.edu.tw/~r09921006/af.png",
+                                        "aspectMode": "fit",
+                                        "aspectRatio": "1.5:1"
+                                    },
+                                    {
+                                        "type": "image",
+                                        "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
+                                        "size": "18px",
+                                        "position": "absolute",
+                                        "offsetTop": "2px",
+                                        "offsetEnd": "2px",
+                                        "action": {
+                                            "type": "postback",
+                                            "data": "remove_af"
+                                        }
+                                    }
+                                ],
+                                "borderColor": "#888888",
+                                "borderWidth": "medium",
+                                "cornerRadius": "md",
+                                "backgroundColor": "#FFFFFFcc"
+                            },
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                    {
+                                        "type": "text",
+                                        "text": "掃地機",
+                                        "align": "center",
+                                        "size": "md",
+                                        "offsetTop": "md",
+                                        "weight": "bold"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "off / 充電中",
+                                        "size": "sm",
+                                        "color": "#888888",
+                                        "align": "center",
+                                        "offsetTop": "sm"
+                                    },
+                                    {
+                                        "type": "separator",
+                                        "margin": "md",
+                                        "color": "#dcdede"
+                                    },
+                                    {
+                                        "type": "image",
+                                        "url": "https://www.csie.ntu.edu.tw/~r09921006/vacuum.png",
+                                        "aspectMode": "fit",
+                                        "aspectRatio": "1.5:1"
+                                    },
+                                    {
+                                        "type": "image",
+                                        "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
+                                        "size": "18px",
+                                        "position": "absolute",
+                                        "offsetTop": "2px",
+                                        "offsetEnd": "3px",
+                                        "action": {
+                                            "type": "postback",
+                                            "label": "action",
+                                            "data": "remove_vacuum"
+                                        }
+                                    }
+                                ],
+                                "borderColor": "#888888",
+                                "borderWidth": "medium",
+                                "cornerRadius": "md",
+                                "backgroundColor": "#FFFFFFcc"
+                            },
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                    {
+                                        "type": "text",
+                                        "text": "新增",
+                                        "align": "center",
+                                        "size": "md",
+                                        "offsetTop": "md",
+                                        "weight": "bold"
+                                    },
+                                    {
+                                        "type": "separator",
+                                        "margin": "md",
+                                        "color": "#dcdede"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "+",
+                                        "size": "4xl",
+                                        "color": "#4265b4",
+                                        "weight": "bold",
+                                        "align": "center",
+                                        "gravity": "center"
+                                    }
+                                ],
+                                "borderColor": "#888888",
+                                "borderWidth": "medium",
+                                "cornerRadius": "md",
+                                "backgroundColor": "#FFFFFFcc",
+                                "action": {
+                                    "type": "postback",
+                                    "data": "add_off"
+                                }
+                            }
+                        ],
+                        "cornerRadius": "md",
+                        "spacing": "sm",
+                        "borderWidth": "light",
+                        "paddingAll": "sm",
+                        "backgroundColor": "#aaaaaa88"
+                    }
+                ],
+                "spacing": "md"
+            }
+        ],
+        "paddingTop": "md",
+        "paddingStart": "lg",
+        "paddingEnd": "lg"
+    },
+    "styles": {
+        "header": {
+            "separator": true
+        }
+    }
+}

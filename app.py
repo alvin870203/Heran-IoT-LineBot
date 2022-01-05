@@ -68,6 +68,65 @@ vacuum_on = False  # remember to update state manually
 #FIXME: what's the init tab?
 current_tab = "scenario"  # {scenario, living_room, master_bedroom, elder_bedroom}
 
+# State of the go home scenario setting
+scenario_go_home_on = ["ac", "add"]
+scenario_go_home_off = ["af", "vacuum", "add"]
+
+# device's components for scenario setting
+ac_box = {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+        {
+            "type": "text",
+            "text": "冷氣",
+            "align": "center",
+            "size": "md",
+            "offsetTop": "md",
+            "weight": "bold"
+        },
+        {
+            "type": "text",
+            "text": f"{'on' if ac_on is True else 'off'} / {ac_set_temp}°C",
+            "size": "sm",
+            "color": "#888888",
+            "align": "center",
+            "offsetTop": "sm"
+        },
+        {
+            "type": "separator",
+            "margin": "md",
+            "color": "#dcdede"
+        },
+        {
+            "type": "image",
+            "url": "https://www.csie.ntu.edu.tw/~r09921006/ac.png",
+            "aspectMode": "fit",
+            "aspectRatio": "1.5:1",
+            "action": {
+                "type": "postback",
+                "data": "adjust_ac"
+            }
+        },
+        {
+            "type": "image",
+            "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
+            "size": "18px",
+            "position": "absolute",
+            "offsetTop": "2px",
+            "offsetEnd": "2px",
+            "action": {
+                "type": "postback",
+                "data": "remove_ac"
+            }
+        }
+    ],
+    "borderColor": "#888888",
+    "borderWidth": "medium",
+    "cornerRadius": "md",
+    "backgroundColor": "#FFFFFFcc"
+}
+
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -86,7 +145,7 @@ def callback():
 
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
-        update_devces_state()        
+        update_devices_state()        
         
         if isinstance(event, MessageEvent) and isinstance(event.message, TextMessage):  # text message
             text = event.message.text
@@ -209,6 +268,12 @@ def callback():
                 line_bot_api.reply_message(
                     event.reply_token, [TextSendMessage(text="尚未配對"+text)]
                 )
+            elif text == "回家模式":
+                #TODO: flex message showing settings menu
+                flex_contents = go_home_flex()
+                line_bot_api.reply_message(
+                    event.reply_token, [FlexSendMessage(alt_text="(回家模式設定介面)", contents=flex_contents)]
+                )
             else:
                 line_bot_api.reply_message(
                     event.reply_token, [TextSendMessage(text="無此功能")]
@@ -237,7 +302,14 @@ def callback():
     return 'OK'
 
 
-def update_devces_state():
+#TODO: flex message showing settings menu
+def go_home_flex():
+    with open("static/flex_scenario_go_home.json") as f:
+        flex_dict = json.load(f)
+    flex_json_contents = json.dumps(flex_dict)
+    return flex_json_contents
+
+def update_devices_state():
     global fan_on, fan_speed, ac_on, ac_set_temp, ac_ambient_temp, af_on, af_pm25
     body = {
         "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf",
