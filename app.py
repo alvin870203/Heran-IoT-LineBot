@@ -472,7 +472,7 @@ def callback():
                 flex_contents = go_home_flex()
                 line_bot_api.reply_message(
                     event.reply_token, [FlexSendMessage(alt_text="(回家模式設定介面)", contents=flex_contents)]
-                )
+                )  # TODO: send another text msg as explanation
             else:
                 line_bot_api.reply_message(
                     event.reply_token, [TextSendMessage(text="無此功能")]
@@ -490,7 +490,13 @@ def callback():
             elif data == "af_onoff":
                 af_on_off(event.reply_token)
             
-            # fan
+            # fan speed control and turn toggle
+            elif data == "fan_speed_up":
+                fan_control_speed_up(event.reply_token)
+            elif data == "fan_speed_down":
+                fan_control_speed_down(event.reply_token)
+            elif data == "fan_turn_toggle":
+                fan_control_turn_toggle(event.reply_token)
             
             # richmenu switch
             elif "richmenu-changed-to-" in data:
@@ -505,14 +511,6 @@ def callback():
         
         
     return 'OK'
-
-
-def go_home_flex():
-    with open("static/flex_scenario_go_home.json", encoding="utf-8") as f:
-        flex_dict = json.load(f)
-    flex_dict["body"]["contents"][0]["contents"][0]["contents"] = [boxes[box] for box in scenario_go_home_on]
-    flex_dict["body"]["contents"][0]["contents"][2]["contents"] = [boxes[box] for box in scenario_go_home_off]
-    return flex_dict
 
 
 def update_devices_state():
@@ -658,6 +656,67 @@ def vacuum_on_off(reply_token):
         )
     else:
         print(f"ERROR: wrong af_on value = {vacuum_on}")
+
+
+def go_home_flex():
+    with open("static/flex_scenario_go_home.json", encoding="utf-8") as f:
+        flex_dict = json.load(f)
+    flex_dict["body"]["contents"][0]["contents"][0]["contents"] = [boxes[box] for box in scenario_go_home_on]
+    flex_dict["body"]["contents"][0]["contents"][2]["contents"] = [boxes[box] for box in scenario_go_home_off]
+    return flex_dict
+
+
+def fan_control_speed_up(reply_token):
+    with open("static/body_SetFanSpeed.json", encoding="utf-8") as f:
+        body = json.load(f)
+    body["inputs"][0]["payload"]["commands"][0]["devices"][0]["id"] = fan_id
+    body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"]["fanSpeed"] = "speed_up"
+    r = requests.post(url, data=json.dumps(body), headers=headers)
+    r_dict = r.json()
+    print(r_dict)
+    update_devices_state()
+    line_bot_api.reply_message(
+        reply_token, TextSendMessage(text=f"已增強電扇風量為: {fan_speed}")
+    )
+
+
+def fan_control_speed_down(reply_token):
+    with open("static/body_SetFanSpeed.json", encoding="utf-8") as f:
+        body = json.load(f)
+    body["inputs"][0]["payload"]["commands"][0]["devices"][0]["id"] = fan_id
+    body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"]["fanSpeed"] = "speed_dow"
+    r = requests.post(url, data=json.dumps(body), headers=headers)
+    r_dict = r.json()
+    print(r_dict)
+    update_devices_state()
+    line_bot_api.reply_message(
+        reply_token, TextSendMessage(text=f"已降低電扇風量為: {fan_speed}")
+    )
+
+
+def fan_control_turn_toggle(reply_token):
+    with open("static/body_SetToggles.json", encoding="utf-8") as f:
+        body = json.load(f)
+    body["inputs"][0]["payload"]["commands"][0]["devices"][0]["id"] = fan_id
+    if fan_turn is True:
+        body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"]["updateToggleSettings"]["turn_toggle"] = False
+        r = requests.post(url, data=json.dumps(body), headers=headers)
+        r_dict = r.json()
+        print(r_dict)
+        line_bot_api.reply_message(
+            reply_token, TextSendMessage(text=f"風扇風向已固定")
+        )
+    elif fan_turn is False:
+        body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"]["updateToggleSettings"]["turn_toggle"] = True
+        r = requests.post(url, data=json.dumps(body), headers=headers)
+        r_dict = r.json()
+        print(r_dict)
+        line_bot_api.reply_message(
+            reply_token, TextSendMessage(text=f"風扇風向已擺頭")
+        )
+    else:
+        print(f"ERROR: wrong value: {fan_turn=}")
+    
 
 
 if __name__ == "__main__":
