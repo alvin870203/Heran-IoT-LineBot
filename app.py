@@ -363,7 +363,7 @@ def callback():
                         image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='電風扇控制介面',
-                        text=f"狀態: {'開' if fan_on is True else '關'}; 風速: {fan_speed}; 風向: {'固定' if fan_turn is True else '擺頭'}",
+                        text=f"狀態: {'開' if fan_on is True else '關'} / 風速: {fan_speed} / 風向: {'固定' if fan_turn is True else '擺頭'}",
                         actions=[
                             PostbackAction(
                                 label='開機/關機',
@@ -420,7 +420,7 @@ def callback():
                         image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='冷氣控制介面',
-                        text=f"狀態: {'開' if ac_on is True else '關'}; 設定溫度: {ac_set_temp}; 環境溫度: {ac_ambient_temp}",
+                        text=f"狀態: {'開' if ac_on is True else '關'} / 設定溫度: {ac_set_temp} / 環境溫度: {ac_ambient_temp}",
                         actions=[
                             PostbackAction(
                                 label='開機/關機',
@@ -451,7 +451,7 @@ def callback():
                         image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='空氣清淨機控制介面',
-                        text=f"狀態: {'開' if af_on is True else '關'}; PM2.5: {af_pm25}",
+                        text=f"狀態: {'開' if af_on is True else '關'} / PM2.5: {af_pm25}",
                         actions=[
                             PostbackAction(
                                 label='開機/關機',
@@ -479,6 +479,8 @@ def callback():
                 )
         elif isinstance(event, PostbackEvent):  # postback event
             data = event.postback.data
+            
+            # on/off control
             if data == "fan_onoff":
                 fan_on_off(event.reply_token)
             elif data == "vacuum_onoff":
@@ -487,7 +489,11 @@ def callback():
                 ac_on_off(event.reply_token)
             elif data == "af_onoff":
                 af_on_off(event.reply_token)
-            elif "richmenu-changed-to-" in data:  # richmenu switch
+            
+            # fan
+            
+            # richmenu switch
+            elif "richmenu-changed-to-" in data:
                 global current_tab
                 current_tab = str(data).strip().split('-')[-1]
                 print(f"Richmenu switched: {current_tab=}")
@@ -606,19 +612,17 @@ def af_on_off(reply_token):
     body["inputs"][0]["payload"]["commands"][0]["devices"][0]["id"] = af_id
     if af_on is True:
         body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"]["on"] = False
-        #FIXME: af control is not implemented yet
-        # r = requests.post(url, data=json.dumps(body), headers=headers)
-        # r_dict = r.json()
-        # print(r_dict)
+        r = requests.post(url, data=json.dumps(body), headers=headers)
+        r_dict = r.json()
+        print(r_dict)
         line_bot_api.reply_message(
             reply_token, TextSendMessage(text="空氣清淨機已關閉")
         )
     elif af_on is False:
         body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"]["on"] = True
-        #FIXME: af control is not implemented yet
-        # r = requests.post(url, data=json.dumps(body), headers=headers)
-        # r_dict = r.json()
-        # print(r_dict)
+        r = requests.post(url, data=json.dumps(body), headers=headers)
+        r_dict = r.json()
+        print(r_dict)
         line_bot_api.reply_message(
             reply_token, TextSendMessage(text="空氣清淨機已開啟")
         )
@@ -627,6 +631,7 @@ def af_on_off(reply_token):
 
 
 def vacuum_on_off(reply_token):
+    global vacuum_on  #FIXME: vacuum state and control are not implemented yet
     with open("static/body_onoff.json", encoding="utf-8") as f:
             body = json.load(f)
     body["inputs"][0]["payload"]["commands"][0]["devices"][0]["id"] = vacuum_id
