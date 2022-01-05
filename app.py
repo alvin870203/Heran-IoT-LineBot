@@ -510,7 +510,7 @@ def go_home_flex():
 
 
 def update_devices_state():
-    global fan_on, fan_speed, fan_turn, ac_on, ac_set_temp, ac_ambient_temp, af_on, af_pm25
+    global fan_on, fan_speed, fan_turn, ac_on, ac_set_temp, ac_ambient_temp, af_on, af_pm25, boxes
     body = {
         "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf",
         "inputs": [{
@@ -546,6 +546,10 @@ def update_devices_state():
             print(f"Update af: {af_on=}, {af_pm25=}")
         else:
             print(f"Unknown device: {device.keys()}")
+    boxes["ac_box"]["contents"][1]["text"] = f"{'on' if ac_on is True else 'off'} / {ac_set_temp}°C"
+    boxes["fan_box"]["contents"][1]["text"] = f"{'on' if fan_on is True else 'off'} / 風速 {fan_speed} / {'擺頭' if fan_turn is True else '固定'}"
+    boxes["af_box"]["contents"][1]["text"] = f"{'on' if af_on is True else 'off'} / {int(af_pm25)} PM2.5"
+    boxes["vacuum_box"]["contents"][1]["text"] = f"{'on / 清掃中' if vacuum_on is True else 'off / 充電中'}"
 
 
 def fan_on_off(reply_token):
