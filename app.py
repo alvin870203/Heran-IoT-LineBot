@@ -109,7 +109,7 @@ def callback():
                         image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='電風扇控制介面',
-                        text=f"目前狀態: {'開' if fan_on is True else '關'}; 風速: {fan_speed}",
+                        text=f"狀態: {'開' if fan_on is True else '關'}; 風速: {fan_speed}",
                         actions=[
                             PostbackAction(
                                 label='開機/關機',
@@ -140,7 +140,7 @@ def callback():
                         image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='掃地機控制介面',
-                        text=f"目前狀態: {'清掃中' if vacuum_on is True else '已回家充電'}",
+                        text=f"狀態: {'清掃中' if vacuum_on is True else '已回家充電'}",
                         actions=[
                             PostbackAction(
                                 label='回家充電/開始清掃',
@@ -161,7 +161,7 @@ def callback():
                         image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='冷氣控制介面',
-                        text=f"目前狀態: {'開' if ac_on is True else '關'}; 設定溫度: {ac_set_temp}; 環境溫度: {ac_ambient_temp}",
+                        text=f"狀態: {'開' if ac_on is True else '關'}; 設定溫度: {ac_set_temp}; 環境溫度: {ac_ambient_temp}",
                         actions=[
                             PostbackAction(
                                 label='開機/關機',
@@ -192,7 +192,7 @@ def callback():
                         image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='空氣清淨機控制介面',
-                        text=f"目前狀態: {'開' if af_on is True else '關'}; PM2.5: {af_pm25}",
+                        text=f"狀態: {'開' if af_on is True else '關'}; PM2.5: {af_pm25}",
                         actions=[
                             PostbackAction(
                                 label='開機/關機',
