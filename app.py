@@ -52,6 +52,7 @@ headers = {"Authorization": "Bearer " + access_token}  # OAuth2.0 url for applia
 fan_id = "a00abf394b1c"
 fan_on = None  # True, False
 fan_speed = None  # int
+fan_turn = None  # True, False
 # - A/C
 ac_id = "a00abf1dd7e7"
 ac_on = None  # True, False
@@ -69,62 +70,256 @@ vacuum_on = False  # remember to update state manually
 current_tab = "scenario"  # {scenario, living_room, master_bedroom, elder_bedroom}
 
 # State of the go home scenario setting
-scenario_go_home_on = ["ac", "add"]
-scenario_go_home_off = ["af", "vacuum", "add"]
+scenario_go_home_on = ["ac_box", "add_box"]
+scenario_go_home_off = ["af_box", "vacuum_box", "add_box"]
 
 # device's components for scenario setting
-ac_box = {
-    "type": "box",
-    "layout": "vertical",
-    "contents": [
-        {
-            "type": "text",
-            "text": "冷氣",
-            "align": "center",
-            "size": "md",
-            "offsetTop": "md",
-            "weight": "bold"
-        },
-        {
-            "type": "text",
-            "text": f"{'on' if ac_on is True else 'off'} / {ac_set_temp}°C",
-            "size": "sm",
-            "color": "#888888",
-            "align": "center",
-            "offsetTop": "sm"
-        },
-        {
-            "type": "separator",
-            "margin": "md",
-            "color": "#dcdede"
-        },
-        {
-            "type": "image",
-            "url": "https://www.csie.ntu.edu.tw/~r09921006/ac.png",
-            "aspectMode": "fit",
-            "aspectRatio": "1.5:1",
-            "action": {
-                "type": "postback",
-                "data": "adjust_ac"
+boxes = {
+    "ac_box": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+            {
+                "type": "text",
+                "text": "冷氣",
+                "align": "center",
+                "size": "md",
+                "offsetTop": "md",
+                "weight": "bold"
+            },
+            {
+                "type": "text",
+                "text": f"{'on' if ac_on is True else 'off'} / {ac_set_temp}°C",
+                "size": "sm",
+                "color": "#888888",
+                "align": "center",
+                "offsetTop": "sm"
+            },
+            {
+                "type": "separator",
+                "margin": "md",
+                "color": "#dcdede"
+            },
+            {
+                "type": "image",
+                "url": "https://www.csie.ntu.edu.tw/~r09921006/ac.png",
+                "aspectMode": "fit",
+                "aspectRatio": "1.5:1",
+                "action": {
+                    "type": "postback",
+                    "data": "adjust_ac"
+                }
+            },
+            {
+                "type": "image",
+                "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
+                "size": "18px",
+                "position": "absolute",
+                "offsetTop": "2px",
+                "offsetEnd": "2px",
+                "action": {
+                    "type": "postback",
+                    "data": "remove_ac"
+                }
             }
-        },
-        {
-            "type": "image",
-            "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
-            "size": "18px",
-            "position": "absolute",
-            "offsetTop": "2px",
-            "offsetEnd": "2px",
-            "action": {
-                "type": "postback",
-                "data": "remove_ac"
+        ],
+        "borderColor": "#888888",
+        "borderWidth": "medium",
+        "cornerRadius": "md",
+        "backgroundColor": "#FFFFFFcc"
+    },
+
+    "fan_box": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+            {
+                "type": "text",
+                "text": "電扇",
+                "align": "center",
+                "size": "md",
+                "offsetTop": "md",
+                "weight": "bold"
+            },
+            {
+                "type": "text",
+                "text": f"{'on' if fan_on is True else 'off'} / 風速 {fan_speed} / {'擺頭' if fan_turn is True else '固定'}",
+                "size": "sm",
+                "color": "#888888",
+                "align": "center",
+                "offsetTop": "sm"
+            },
+            {
+                "type": "separator",
+                "margin": "md",
+                "color": "#dcdede"
+            },
+            {
+                "type": "image",
+                "url": "https://www.csie.ntu.edu.tw/~r09921006/fan.png",
+                "aspectMode": "fit",
+                "aspectRatio": "1.5:1",
+                "action": {
+                    "type": "postback",
+                    "data": "adjust_fan"
+                }
+            },
+            {
+                "type": "image",
+                "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
+                "size": "18px",
+                "position": "absolute",
+                "offsetTop": "2px",
+                "offsetEnd": "2px",
+                "action": {
+                    "type": "postback",
+                    "data": "remove_fan"
+                }
             }
+        ],
+        "borderColor": "#888888",
+        "borderWidth": "medium",
+        "cornerRadius": "md",
+        "backgroundColor": "#FFFFFFcc"
+    },
+
+    "add_box": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+            {
+                "type": "text",
+                "text": "新增",
+                "align": "center",
+                "size": "md",
+                "offsetTop": "md",
+                "weight": "bold"
+            },
+            {
+                "type": "separator",
+                "margin": "md",
+                "color": "#dcdede"
+            },
+            {
+                "type": "text",
+                "text": "+",
+                "size": "4xl",
+                "color": "#4265b4",
+                "weight": "bold",
+                "align": "center",
+                "gravity": "center"
+            }
+        ],
+        "borderColor": "#888888",
+        "borderWidth": "medium",
+        "cornerRadius": "md",
+        "backgroundColor": "#FFFFFFcc",
+        "action": {
+            "type": "postback",
+            "data": "add_on"
         }
-    ],
-    "borderColor": "#888888",
-    "borderWidth": "medium",
-    "cornerRadius": "md",
-    "backgroundColor": "#FFFFFFcc"
+    },
+
+    "af_box": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+            {
+                "type": "text",
+                "text": "清淨機",
+                "align": "center",
+                "size": "md",
+                "offsetTop": "md",
+                "weight": "bold"
+            },
+            {
+                "type": "text",
+                "text": f"{'on' if af_on is True else 'off'} / {int(af_pm25)} PM2.5",
+                "size": "sm",
+                "color": "#888888",
+                "align": "center",
+                "offsetTop": "sm"
+            },
+            {
+                "type": "separator",
+                "margin": "md",
+                "color": "#dcdede"
+            },
+            {
+                "type": "image",
+                "url": "https://www.csie.ntu.edu.tw/~r09921006/af.png",
+                "aspectMode": "fit",
+                "aspectRatio": "1.5:1"
+            },
+            {
+                "type": "image",
+                "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
+                "size": "18px",
+                "position": "absolute",
+                "offsetTop": "2px",
+                "offsetEnd": "2px",
+                "action": {
+                    "type": "postback",
+                    "data": "remove_af"
+                }
+            }
+        ],
+        "borderColor": "#888888",
+        "borderWidth": "medium",
+        "cornerRadius": "md",
+        "backgroundColor": "#FFFFFFcc"
+    },
+
+    "vacuum_box": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+            {
+                "type": "text",
+                "text": "掃地機",
+                "align": "center",
+                "size": "md",
+                "offsetTop": "md",
+                "weight": "bold"
+            },
+            {
+                "type": "text",
+                "text": f"{'on / 清掃中' if vacuum_on is True else 'off / 充電中'}",
+                "size": "sm",
+                "color": "#888888",
+                "align": "center",
+                "offsetTop": "sm"
+            },
+            {
+                "type": "separator",
+                "margin": "md",
+                "color": "#dcdede"
+            },
+            {
+                "type": "image",
+                "url": "https://www.csie.ntu.edu.tw/~r09921006/vacuum.png",
+                "aspectMode": "fit",
+                "aspectRatio": "1.5:1"
+            },
+            {
+                "type": "image",
+                "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
+                "size": "18px",
+                "position": "absolute",
+                "offsetTop": "2px",
+                "offsetEnd": "2px",
+                "action": {
+                    "type": "postback",
+                    "label": "action",
+                    "data": "remove_vacuum"
+                }
+            }
+        ],
+        "borderColor": "#888888",
+        "borderWidth": "medium",
+        "cornerRadius": "md",
+        "backgroundColor": "#FFFFFFcc"
+    }
 }
 
 
@@ -168,7 +363,7 @@ def callback():
                         image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='電風扇控制介面',
-                        text=f"狀態: {'開' if fan_on is True else '關'}; 風速: {fan_speed}",
+                        text=f"狀態: {'開' if fan_on is True else '關'}; 風速: {fan_speed}; 風向: {'固定' if fan_turn is True else '擺頭'}",
                         actions=[
                             PostbackAction(
                                 label='開機/關機',
@@ -184,6 +379,11 @@ def callback():
                                 label='降低風量',
                                 # display_text='postback text',
                                 data='fan_speed_down'
+                            ),
+                            PostbackAction(
+                                label='固定/擺頭',
+                                # display_text='postback text',
+                                data='fan_turn_toggle'
                             )
                         ]
                     )
@@ -269,7 +469,6 @@ def callback():
                     event.reply_token, [TextSendMessage(text="尚未配對"+text)]
                 )
             elif text == "回家模式":
-                #TODO: flex message showing settings menu
                 flex_contents = go_home_flex()
                 line_bot_api.reply_message(
                     event.reply_token, [FlexSendMessage(alt_text="(回家模式設定介面)", contents=flex_contents)]
@@ -302,14 +501,16 @@ def callback():
     return 'OK'
 
 
-#TODO: flex message showing settings menu
 def go_home_flex():
     with open("static/flex_scenario_go_home.json", encoding="utf-8") as f:
         flex_dict = json.load(f)
+    flex_dict["body"]["contents"][0]["contents"][0]["contents"] = [boxes[box] for box in scenario_go_home_on]
+    flex_dict["body"]["contents"][0]["contents"][2]["contents"] = [boxes[box] for box in scenario_go_home_off]
     return flex_dict
 
+
 def update_devices_state():
-    global fan_on, fan_speed, ac_on, ac_set_temp, ac_ambient_temp, af_on, af_pm25
+    global fan_on, fan_speed, fan_turn, ac_on, ac_set_temp, ac_ambient_temp, af_on, af_pm25
     body = {
         "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf",
         "inputs": [{
@@ -332,7 +533,8 @@ def update_devices_state():
         if fan_id in device.keys():
             fan_on = bool(device[fan_id]["on"])
             fan_speed = int(device[fan_id]["currentFanSpeedSetting"])
-            print(f"Update fan: {fan_on=}, {fan_speed=}")
+            fan_turn = bool(device[fan_id]["currentToggleSettings"]["turn_toggle"])
+            print(f"Update fan: {fan_on=}, {fan_speed=}, {fan_turn=}")
         elif ac_id in device.keys():
             ac_on = bool(device[ac_id]["on"])
             ac_set_temp = int(device[ac_id]["thermostatTemperatureSetpoint"])
@@ -347,7 +549,7 @@ def update_devices_state():
 
 
 def fan_on_off(reply_token):
-    with open("static/body_onoff.json") as f:
+    with open("static/body_onoff.json", encoding="utf-8") as f:
         body = json.load(f)
     body["inputs"][0]["payload"]["commands"][0]["devices"][0]["id"] = fan_id
     if fan_on is True:
@@ -371,7 +573,7 @@ def fan_on_off(reply_token):
 
 
 def ac_on_off(reply_token):
-    with open("static/body_onoff.json") as f:
+    with open("static/body_onoff.json", encoding="utf-8") as f:
             body = json.load(f)
     body["inputs"][0]["payload"]["commands"][0]["devices"][0]["id"] = ac_id
     if ac_on is True:
@@ -395,7 +597,7 @@ def ac_on_off(reply_token):
 
 
 def af_on_off(reply_token):
-    with open("static/body_onoff.json") as f:
+    with open("static/body_onoff.json", encoding="utf-8") as f:
             body = json.load(f)
     body["inputs"][0]["payload"]["commands"][0]["devices"][0]["id"] = af_id
     if af_on is True:
@@ -421,7 +623,7 @@ def af_on_off(reply_token):
 
 
 def vacuum_on_off(reply_token):
-    with open("static/body_onoff.json") as f:
+    with open("static/body_onoff.json", encoding="utf-8") as f:
             body = json.load(f)
     body["inputs"][0]["payload"]["commands"][0]["devices"][0]["id"] = vacuum_id
     global vacuum_on

@@ -334,7 +334,7 @@
                                         "size": "18px",
                                         "position": "absolute",
                                         "offsetTop": "2px",
-                                        "offsetEnd": "3px",
+                                        "offsetEnd": "2px",
                                         "action": {
                                             "type": "postback",
                                             "label": "action",
