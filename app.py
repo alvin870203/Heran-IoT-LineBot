@@ -51,17 +51,17 @@ headers = {"Authorization": "Bearer " + access_token}  # OAuth2.0 url for applia
 # - Fan
 fan_id = "a00abf394b1c"
 fan_on = None  # True, False
-fan_speed = None  # int
+fan_speed = -1  # int
 fan_turn = None  # True, False
 # - A/C
 ac_id = "a00abf1dd7e7"
 ac_on = None  # True, False
-ac_set_temp = None  # int
-ac_ambient_temp = None  # int 
+ac_set_temp = -1  # int
+ac_ambient_temp = -1  # int 
 # - A/F
 af_id = "a00abf1ddb09"
 af_on = None  # True, False
-af_pm25 = None  # float
+af_pm25 = -1.  # float
 # - vacuum - FIXME: no vacuum yet, can't update state, temporally init as off
 vacuum_id = "no_id_yet"
 vacuum_on = False  # remember to update state manually
