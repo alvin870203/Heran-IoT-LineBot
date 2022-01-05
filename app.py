@@ -65,6 +65,9 @@ af_pm25 = None  # float
 vacuum_id = "no_id_yet"
 vacuum_on = False  # remember to update state manually
 
+#FIXME: what's the init tab?
+current_tab = "scenario"  # {scenario, living_room, master_bedroom, elder_bedroom}
+
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -220,6 +223,10 @@ def callback():
                 ac_on_off(event.reply_token)
             elif data == "af_onoff":
                 af_on_off(event.reply_token)
+            elif "richmenu-changed-to-" in data:  # richmenu switch
+                global current_tab
+                current_tab = str(data).strip().split('-')[-1]
+                print(f"Richmenu switched: {current_tab=}")
             else:
                 line_bot_api.reply_message(
                     event.reply_token, [TextSendMessage(text="無此功能")]
