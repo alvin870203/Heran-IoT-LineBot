@@ -304,7 +304,7 @@ def callback():
 
 #TODO: flex message showing settings menu
 def go_home_flex():
-    with open("static/flex_scenario_go_home.json") as f:
+    with open("static/flex_scenario_go_home.json", encoding="utf-8") as f:
         flex_dict = json.load(f)
     flex_json_contents = json.dumps(flex_dict)
     return flex_json_contents
@@ -349,7 +349,7 @@ def update_devices_state():
 
 def fan_on_off(reply_token):
     with open("static/body_onoff.json") as f:
-            body = json.load(f)
+        body = json.load(f)
     body["inputs"][0]["payload"]["commands"][0]["devices"][0]["id"] = fan_id
     if fan_on is True:
         body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"]["on"] = False
