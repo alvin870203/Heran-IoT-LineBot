@@ -500,7 +500,7 @@ def callback():
             
             # ac setting temperature control
             elif data == "ac_temp_up" or data == "ac_temp_down":
-                ac_control_set_temp(data.strip("ac_temp"), event.reply_token)
+                ac_control_set_temp(data.split('_')[-1], event.reply_token)
             
             # richmenu switch
             elif "richmenu-changed-to-" in data:
