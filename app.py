@@ -904,7 +904,7 @@ def remove_box(data, reply_token):
     scenario_name = data.replace(f"remove_{data.split('_')[1]}_", '')  # >>> "go_home" or ...
     scenarios_on_off[scenario_name + "_on"] = [box for box in scenarios_on_off[scenario_name + "_on"] if box != box_name]
     scenarios_on_off[scenario_name + "_off"] = [box for box in scenarios_on_off[scenario_name + "_off"] if box != box_name]
-    flex_contents = globals()[scenario_name + "_flex"]()
+    flex_contents = get_flex(scenario_name)
     line_bot_api.reply_message(
         reply_token, 
         [
@@ -930,7 +930,7 @@ def add_box_reply(data, reply_token):
                             action=PostbackAction(label=box.split('_')[0], data=f"insert_{column_name}_{box.split('_')[-1]}_{scenario_name}")
                         )
                         for box in ["電扇_fan", "冷氣_ac", "清淨機_af", "掃地機_vacuum"]
-                        if box.split('_')[-1]+"_box" not in scenarios_on_off[f"{scenario_name}_{column_name}"]
+                        if box.split('_')[-1]+"_box" not in scenarios_on_off[f"{scenario_name}_on"] + scenarios_on_off[f"{scenario_name}_off"]
                     ] + [QuickReplyButton(action=PostbackAction(label="取消", data="insert_cancel"))]
                 )
             )
