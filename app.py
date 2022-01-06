@@ -73,255 +73,256 @@ current_tab = "scenario"  # {scenario, living_room, master_bedroom, elder_bedroo
 scenario_go_home_on = ["ac_box", "add_box"]
 scenario_go_home_off = ["af_box", "vacuum_box", "add_box"]
 
-# device's components for scenario setting
-boxes = {
-    "ac_box": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-            {
-                "type": "text",
-                "text": "冷氣",
-                "align": "center",
-                "size": "md",
-                "offsetTop": "md",
-                "weight": "bold"
-            },
-            {
-                "type": "text",
-                "text": f"{'on' if ac_on is True else 'off'} / {ac_set_temp}°C",
-                "size": "sm",
-                "color": "#888888",
-                "align": "center",
-                "offsetTop": "sm"
-            },
-            {
-                "type": "separator",
-                "margin": "md",
-                "color": "#dcdede"
-            },
-            {
-                "type": "image",
-                "url": "https://www.csie.ntu.edu.tw/~r09921006/ac.png",
-                "aspectMode": "fit",
-                "aspectRatio": "1.5:1",
-                "action": {
-                    "type": "postback",
-                    "data": "adjust_ac"
+def get_boxes(scenario):
+    # device's components for scenario setting
+    boxes = {
+        "ac_box": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+                {
+                    "type": "text",
+                    "text": "冷氣",
+                    "align": "center",
+                    "size": "md",
+                    "offsetTop": "md",
+                    "weight": "bold"
+                },
+                {
+                    "type": "text",
+                    "text": f"{'on' if ac_on is True else 'off'} / {ac_set_temp}°C",
+                    "size": "sm",
+                    "color": "#888888",
+                    "align": "center",
+                    "offsetTop": "sm"
+                },
+                {
+                    "type": "separator",
+                    "margin": "md",
+                    "color": "#dcdede"
+                },
+                {
+                    "type": "image",
+                    "url": "https://www.csie.ntu.edu.tw/~r09921006/ac.png",
+                    "aspectMode": "fit",
+                    "aspectRatio": "1.5:1",
+                    "action": {
+                        "type": "postback",
+                        "data": f"adjust_ac_{scenario}"
+                    }
+                },
+                {
+                    "type": "image",
+                    "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
+                    "size": "18px",
+                    "position": "absolute",
+                    "offsetTop": "2px",
+                    "offsetEnd": "2px",
+                    "action": {
+                        "type": "postback",
+                        "data": f"remove_ac_{scenario}"
+                    }
                 }
-            },
-            {
-                "type": "image",
-                "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
-                "size": "18px",
-                "position": "absolute",
-                "offsetTop": "2px",
-                "offsetEnd": "2px",
-                "action": {
-                    "type": "postback",
-                    "data": "remove_ac"
-                }
-            }
-        ],
-        "borderColor": "#888888",
-        "borderWidth": "medium",
-        "cornerRadius": "md",
-        "backgroundColor": "#FFFFFFcc"
-    },
+            ],
+            "borderColor": "#888888",
+            "borderWidth": "medium",
+            "cornerRadius": "md",
+            "backgroundColor": "#FFFFFFcc"
+        },
 
-    "fan_box": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-            {
-                "type": "text",
-                "text": "電扇",
-                "align": "center",
-                "size": "md",
-                "offsetTop": "md",
-                "weight": "bold"
-            },
-            {
-                "type": "text",
-                "text": f"{'on' if fan_on is True else 'off'} / 風速 {fan_speed} / {'擺頭' if fan_turn is True else '固定'}",
-                "size": "sm",
-                "color": "#888888",
-                "align": "center",
-                "offsetTop": "sm"
-            },
-            {
-                "type": "separator",
-                "margin": "md",
-                "color": "#dcdede"
-            },
-            {
-                "type": "image",
-                "url": "https://www.csie.ntu.edu.tw/~r09921006/fan.png",
-                "aspectMode": "fit",
-                "aspectRatio": "1.5:1",
-                "action": {
-                    "type": "postback",
-                    "data": "adjust_fan"
+        "fan_box": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+                {
+                    "type": "text",
+                    "text": "電扇",
+                    "align": "center",
+                    "size": "md",
+                    "offsetTop": "md",
+                    "weight": "bold"
+                },
+                {
+                    "type": "text",
+                    "text": f"{'on' if fan_on is True else 'off'} / 風速 {fan_speed} / {'擺頭' if fan_turn is True else '固定'}",
+                    "size": "sm",
+                    "color": "#888888",
+                    "align": "center",
+                    "offsetTop": "sm"
+                },
+                {
+                    "type": "separator",
+                    "margin": "md",
+                    "color": "#dcdede"
+                },
+                {
+                    "type": "image",
+                    "url": "https://www.csie.ntu.edu.tw/~r09921006/fan.png",
+                    "aspectMode": "fit",
+                    "aspectRatio": "1.5:1",
+                    "action": {
+                        "type": "postback",
+                        "data": f"adjust_fan_{scenario}"
+                    }
+                },
+                {
+                    "type": "image",
+                    "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
+                    "size": "18px",
+                    "position": "absolute",
+                    "offsetTop": "2px",
+                    "offsetEnd": "2px",
+                    "action": {
+                        "type": "postback",
+                        "data": f"remove_fan_{scenario}"
+                    }
                 }
-            },
-            {
-                "type": "image",
-                "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
-                "size": "18px",
-                "position": "absolute",
-                "offsetTop": "2px",
-                "offsetEnd": "2px",
-                "action": {
-                    "type": "postback",
-                    "data": "remove_fan"
-                }
-            }
-        ],
-        "borderColor": "#888888",
-        "borderWidth": "medium",
-        "cornerRadius": "md",
-        "backgroundColor": "#FFFFFFcc"
-    },
+            ],
+            "borderColor": "#888888",
+            "borderWidth": "medium",
+            "cornerRadius": "md",
+            "backgroundColor": "#FFFFFFcc"
+        },
 
-    "add_box": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-            {
-                "type": "text",
-                "text": "新增",
-                "align": "center",
-                "size": "md",
-                "offsetTop": "md",
-                "weight": "bold"
-            },
-            {
-                "type": "separator",
-                "margin": "md",
-                "color": "#dcdede"
-            },
-            {
-                "type": "text",
-                "text": "+",
-                "size": "4xl",
-                "color": "#4265b4",
-                "weight": "bold",
-                "align": "center",
-                "gravity": "center"
+        "add_box": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+                {
+                    "type": "text",
+                    "text": "新增",
+                    "align": "center",
+                    "size": "md",
+                    "offsetTop": "md",
+                    "weight": "bold"
+                },
+                {
+                    "type": "separator",
+                    "margin": "md",
+                    "color": "#dcdede"
+                },
+                {
+                    "type": "text",
+                    "text": "+",
+                    "size": "4xl",
+                    "color": "#4265b4",
+                    "weight": "bold",
+                    "align": "center",
+                    "gravity": "center"
+                }
+            ],
+            "borderColor": "#888888",
+            "borderWidth": "medium",
+            "cornerRadius": "md",
+            "backgroundColor": "#FFFFFFcc",
+            "action": {
+                "type": "postback",
+                "data": f"add_on_{scenario}"
             }
-        ],
-        "borderColor": "#888888",
-        "borderWidth": "medium",
-        "cornerRadius": "md",
-        "backgroundColor": "#FFFFFFcc",
-        "action": {
-            "type": "postback",
-            "data": "add_on"
+        },
+
+        "af_box": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+                {
+                    "type": "text",
+                    "text": "清淨機",
+                    "align": "center",
+                    "size": "md",
+                    "offsetTop": "md",
+                    "weight": "bold"
+                },
+                {
+                    "type": "text",
+                    "text": f"{'on' if af_on is True else 'off'} / {int(af_pm25)} PM2.5",
+                    "size": "sm",
+                    "color": "#888888",
+                    "align": "center",
+                    "offsetTop": "sm"
+                },
+                {
+                    "type": "separator",
+                    "margin": "md",
+                    "color": "#dcdede"
+                },
+                {
+                    "type": "image",
+                    "url": "https://www.csie.ntu.edu.tw/~r09921006/af.png",
+                    "aspectMode": "fit",
+                    "aspectRatio": "1.5:1"
+                },
+                {
+                    "type": "image",
+                    "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
+                    "size": "18px",
+                    "position": "absolute",
+                    "offsetTop": "2px",
+                    "offsetEnd": "2px",
+                    "action": {
+                        "type": "postback",
+                        "data": f"remove_af_{scenario}"
+                    }
+                }
+            ],
+            "borderColor": "#888888",
+            "borderWidth": "medium",
+            "cornerRadius": "md",
+            "backgroundColor": "#FFFFFFcc"
+        },
+
+        "vacuum_box": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+                {
+                    "type": "text",
+                    "text": "掃地機",
+                    "align": "center",
+                    "size": "md",
+                    "offsetTop": "md",
+                    "weight": "bold"
+                },
+                {
+                    "type": "text",
+                    "text": f"{'on / 清掃中' if vacuum_on is True else 'off / 充電中'}",
+                    "size": "sm",
+                    "color": "#888888",
+                    "align": "center",
+                    "offsetTop": "sm"
+                },
+                {
+                    "type": "separator",
+                    "margin": "md",
+                    "color": "#dcdede"
+                },
+                {
+                    "type": "image",
+                    "url": "https://www.csie.ntu.edu.tw/~r09921006/vacuum.png",
+                    "aspectMode": "fit",
+                    "aspectRatio": "1.5:1"
+                },
+                {
+                    "type": "image",
+                    "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
+                    "size": "18px",
+                    "position": "absolute",
+                    "offsetTop": "2px",
+                    "offsetEnd": "2px",
+                    "action": {
+                        "type": "postback",
+                        "label": "action",
+                        "data": f"remove_vacuum_{scenario}"
+                    }
+                }
+            ],
+            "borderColor": "#888888",
+            "borderWidth": "medium",
+            "cornerRadius": "md",
+            "backgroundColor": "#FFFFFFcc"
         }
-    },
-
-    "af_box": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-            {
-                "type": "text",
-                "text": "清淨機",
-                "align": "center",
-                "size": "md",
-                "offsetTop": "md",
-                "weight": "bold"
-            },
-            {
-                "type": "text",
-                "text": f"{'on' if af_on is True else 'off'} / {int(af_pm25)} PM2.5",
-                "size": "sm",
-                "color": "#888888",
-                "align": "center",
-                "offsetTop": "sm"
-            },
-            {
-                "type": "separator",
-                "margin": "md",
-                "color": "#dcdede"
-            },
-            {
-                "type": "image",
-                "url": "https://www.csie.ntu.edu.tw/~r09921006/af.png",
-                "aspectMode": "fit",
-                "aspectRatio": "1.5:1"
-            },
-            {
-                "type": "image",
-                "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
-                "size": "18px",
-                "position": "absolute",
-                "offsetTop": "2px",
-                "offsetEnd": "2px",
-                "action": {
-                    "type": "postback",
-                    "data": "remove_af"
-                }
-            }
-        ],
-        "borderColor": "#888888",
-        "borderWidth": "medium",
-        "cornerRadius": "md",
-        "backgroundColor": "#FFFFFFcc"
-    },
-
-    "vacuum_box": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-            {
-                "type": "text",
-                "text": "掃地機",
-                "align": "center",
-                "size": "md",
-                "offsetTop": "md",
-                "weight": "bold"
-            },
-            {
-                "type": "text",
-                "text": f"{'on / 清掃中' if vacuum_on is True else 'off / 充電中'}",
-                "size": "sm",
-                "color": "#888888",
-                "align": "center",
-                "offsetTop": "sm"
-            },
-            {
-                "type": "separator",
-                "margin": "md",
-                "color": "#dcdede"
-            },
-            {
-                "type": "image",
-                "url": "https://www.csie.ntu.edu.tw/~r09921006/vacuum.png",
-                "aspectMode": "fit",
-                "aspectRatio": "1.5:1"
-            },
-            {
-                "type": "image",
-                "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
-                "size": "18px",
-                "position": "absolute",
-                "offsetTop": "2px",
-                "offsetEnd": "2px",
-                "action": {
-                    "type": "postback",
-                    "label": "action",
-                    "data": "remove_vacuum"
-                }
-            }
-        ],
-        "borderColor": "#888888",
-        "borderWidth": "medium",
-        "cornerRadius": "md",
-        "backgroundColor": "#FFFFFFcc"
     }
-}
-
+    return boxes
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -479,7 +480,7 @@ def callback():
                 )
         elif isinstance(event, PostbackEvent):  # postback event
             data = event.postback.data
-            
+            # TODO: use postback action to send message and resend updated state as text or small flex, to avoid query too fast
             # on/off control
             if data == "fan_onoff":
                 fan_on_off(event.reply_token)
@@ -554,10 +555,10 @@ def update_devices_state():
             print(f"Update af: {af_on=}, {af_pm25=}")
         else:
             print(f"Unknown device: {device.keys()}")
-    boxes["ac_box"]["contents"][1]["text"] = f"{'on' if ac_on is True else 'off'} / {ac_set_temp}°C"
-    boxes["fan_box"]["contents"][1]["text"] = f"{'on' if fan_on is True else 'off'} / 風速 {fan_speed} / {'擺頭' if fan_turn is True else '固定'}"
-    boxes["af_box"]["contents"][1]["text"] = f"{'on' if af_on is True else 'off'} / {int(af_pm25)} PM2.5"
-    boxes["vacuum_box"]["contents"][1]["text"] = f"{'on / 清掃中' if vacuum_on is True else 'off / 充電中'}"
+    # boxes["ac_box"]["contents"][1]["text"] = f"{'on' if ac_on is True else 'off'} / {ac_set_temp}°C"
+    # boxes["fan_box"]["contents"][1]["text"] = f"{'on' if fan_on is True else 'off'} / 風速 {fan_speed} / {'擺頭' if fan_turn is True else '固定'}"
+    # boxes["af_box"]["contents"][1]["text"] = f"{'on' if af_on is True else 'off'} / {int(af_pm25)} PM2.5"
+    # boxes["vacuum_box"]["contents"][1]["text"] = f"{'on / 清掃中' if vacuum_on is True else 'off / 充電中'}"
 
 
 def fan_on_off(reply_token):
@@ -664,6 +665,7 @@ def vacuum_on_off(reply_token):
 def go_home_flex():
     with open("static/flex_scenario_go_home.json", encoding="utf-8") as f:
         flex_dict = json.load(f)
+    boxes = get_boxes("go_home")
     flex_dict["body"]["contents"][0]["contents"][0]["contents"] = [boxes[box] for box in scenario_go_home_on]
     flex_dict["body"]["contents"][0]["contents"][2]["contents"] = [boxes[box] for box in scenario_go_home_off]
     return flex_dict
