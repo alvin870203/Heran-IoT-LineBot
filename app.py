@@ -924,7 +924,7 @@ def add_box_reply(data, reply_token):
                 quick_reply=QuickReply(
                     items=[
                         QuickReplyButton(
-                            image_url=f"https://www.csie.ntu.edu.tw/~r09921006/{box.split('_')[-1]}.png",
+                            image_url=f"https://www.csie.ntu.edu.tw/~r09921006/{box.split('_')[-1]}_white.jpg",
                             action=PostbackAction(label=box.split('_')[0], data=f"insert_{column_name}_{box.split('_')[-1]}_{scenario_name}")
                         )
                         for box in ["電扇_fan", "冷氣_ac", "清淨機_af", "掃地機_vacuum"]
