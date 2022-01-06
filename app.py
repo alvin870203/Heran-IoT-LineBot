@@ -173,7 +173,7 @@ def get_boxes(scenario):
                     "offsetEnd": "none",
                     "action": {
                         "type": "postback",
-                        "data": "remove_ac_{scenario}"
+                        "data": f"remove_ac_{scenario}"
                     },
                     "offsetTop": "none"
                 }
@@ -239,7 +239,7 @@ def get_boxes(scenario):
                     "offsetEnd": "none",
                     "action": {
                         "type": "postback",
-                        "data": "remove_fan_{scenario}"
+                        "data": f"remove_fan_{scenario}"
                     },
                     "offsetTop": "none"
                 }
@@ -338,7 +338,7 @@ def get_boxes(scenario):
                     "offsetEnd": "none",
                     "action": {
                         "type": "postback",
-                        "data": "remove_af_{scenario}"
+                        "data": f"remove_af_{scenario}"
                     },
                     "offsetTop": "none"
                 }
@@ -401,7 +401,7 @@ def get_boxes(scenario):
                     "offsetEnd": "none",
                     "action": {
                         "type": "postback",
-                        "data": "remove_vacuum_{scenario}"
+                        "data": f"remove_vacuum_{scenario}"
                     },
                     "offsetTop": "none"
                 }
