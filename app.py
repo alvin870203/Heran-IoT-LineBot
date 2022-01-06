@@ -598,6 +598,10 @@ def callback():
             elif "remove_" in data:
                 remove_box(data, event.reply_token)
             
+            # add boxes in scenario
+            elif "add_" in data:
+                add_box(data, event.reply_token)
+            
             # richmenu switch
             elif "richmenu-changed-to-" in data:
                 global current_tab
@@ -857,8 +861,8 @@ def ac_control_set_temp(down_or_up, reply_token):
 
 def remove_box(data, reply_token):
     global scenarios_on_off
-    box_name = data.split('_')[1] + "_box"  # >>> ac_box
-    scenario_name = data.replace(f"remove_{data.split('_')[1]}_", '')  # >>> go_home
+    box_name = data.split('_')[1] + "_box"  # >>> "ac_box"
+    scenario_name = data.replace(f"remove_{data.split('_')[1]}_", '')  # >>> "go_home" or ...
     scenarios_on_off[scenario_name + "_on"] = [box for box in scenarios_on_off[scenario_name + "_on"] if box != box_name]
     scenarios_on_off[scenario_name + "_off"] = [box for box in scenarios_on_off[scenario_name + "_off"] if box != box_name]
     flex_contents = globals()[scenario_name + "_flex"]()
@@ -869,6 +873,32 @@ def remove_box(data, reply_token):
             FlexSendMessage(alt_text="(設定介面)", contents=flex_contents)
         ]
     )
+
+
+def add_box_reply(data, reply_token):
+    global scenarios_on_off
+    column_name = data.split('_')[1]  # >>> "on" or "off"
+    scenario_name = data.replace(f"add_{column_name}_", '')  # >>> "go_home" or ...
+    line_bot_api.reply_message(
+        reply_token,
+        [
+            TextSendMessage(
+                text="請選擇欲新增的家電",
+                quick_reply=QuickReply(
+                    items=[
+                        QuickReplyButton(
+                            image_url="https://www.csie.ntu.edu.tw/~r09921006/ac.png",
+                            action=PostbackAction(label="label1", data="data1")
+                        ) #for box in ["ac"] in scenarios_on_off[f"{scenario_name}_{column_name}"]
+                    ]
+                )
+            )
+        ]
+    )
+
+
+# def add_box_execute(data, reply_token):
+
 
 if __name__ == "__main__":
     arg_parser = ArgumentParser(
