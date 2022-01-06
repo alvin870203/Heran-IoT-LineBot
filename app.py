@@ -19,6 +19,9 @@ import json
 import requests
 from argparse import ArgumentParser
 
+import pymongo
+from bson.objectid import ObjectId
+
 from flask import Flask, request, abort
 from linebot import (
     LineBotApi, WebhookParser
@@ -72,9 +75,45 @@ current_tab = "scenario"  # {scenario, living_room, master_bedroom, elder_bedroo
 # State of the scenario setting
 scenarios_on_off = {
     "go_home_on": ["ac_box", "add_box"],
-    "go_home_off": ["af_box", "vacuum_box", "add_box"]
-    # TODO: add all the on off boxes
+    "go_home_off": ["af_box", "vacuum_box", "add_box"],
+    "all_go_home_on": ["add_box"],
+    "all_go_home_off": ["add_box"],
+    "go_out_on": ["add_box"],
+    "go_out_off": ["add_box"],
+    "night_on": ["add_box"],
+    "night_off": ["add_box"],
+    "morning_on": ["add_box"],
+    "morning_off": ["add_box"],
+    "noon_on": ["add_box"],
+    "noon_off": ["add_box"]
 }
+
+# re-new a document on MongoDB
+cluster = "mongodb+srv://alvin870203:Lmjh990231@cluster0.5iust.mongodb.net/line_bot?retryWrites=true&w=majority"
+client = pymongo.MongoClient(cluster)
+print(client.list_database_names())
+db = client.line_bot
+print(db.list_collection_names())
+states = db.states
+def get_state0():
+    state0 = {
+        "fan_on": fan_on,
+        "fan_speed": fan_speed,
+        "fan_turn": fan_turn,
+        "ac_on": ac_on,
+        "ac_set_temp": ac_set_temp,
+        "ac_ambient_temp": ac_ambient_temp,
+        "af_on": af_on,
+        "af_pm25": af_pm25,
+        "vacuum_on": vacuum_on,
+        "current_tab": current_tab,
+        "scenarios_on_off": scenarios_on_off
+    }
+    return state0
+object_id_dict = {"_id": ObjectId("61d7363db23cc7cb5c674635")}
+result = states.replace_one(object_id_dict, get_state0())
+print(f"MongoDB: {result=}")
+
 
 def get_boxes(scenario):
     # device's components for scenario setting
@@ -344,7 +383,8 @@ def callback():
 
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
-        update_devices_state()        
+        load_database()  # load global variables states from MongoDB
+        update_devices_state()
         
         if isinstance(event, MessageEvent) and isinstance(event.message, TextMessage):  # text message
             text = event.message.text
@@ -519,14 +559,15 @@ def callback():
                 line_bot_api.reply_message(
                     event.reply_token, [TextSendMessage(text="無此功能")]
                 )
-                
+        
+        update_database()  # write updated global variables states back to MongoDB
         
         
     return 'OK'
 
 
 def update_devices_state():
-    global fan_on, fan_speed, fan_turn, ac_on, ac_set_temp, ac_ambient_temp, af_on, af_pm25, boxes
+    global fan_on, fan_speed, fan_turn, ac_on, ac_set_temp, ac_ambient_temp, af_on, af_pm25#, boxes
     body = {
         "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf",
         "inputs": [{
@@ -566,6 +607,18 @@ def update_devices_state():
     # boxes["fan_box"]["contents"][1]["text"] = f"{'on' if fan_on is True else 'off'} / 風速 {fan_speed} / {'擺頭' if fan_turn is True else '固定'}"
     # boxes["af_box"]["contents"][1]["text"] = f"{'on' if af_on is True else 'off'} / {int(af_pm25)} PM2.5"
     # boxes["vacuum_box"]["contents"][1]["text"] = f"{'on / 清掃中' if vacuum_on is True else 'off / 充電中'}"
+
+
+def load_database():
+    # global fan_on, fan_speed, fan_turn, ac_on, ac_set_temp, ac_ambient_temp, af_on, af_pm25, vacuum_on, current_tab, scenarios_on_off
+    result = states.find_one(object_id_dict)
+    for key, value in result.items():
+        if key != "_id":
+            globals()[key] = value
+
+
+def update_database():
+    states.replace_one(object_id_dict, get_state0())
 
 
 def fan_on_off(reply_token):
