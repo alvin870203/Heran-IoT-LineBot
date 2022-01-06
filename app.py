@@ -600,7 +600,7 @@ def callback():
             
             # add boxes in scenario
             elif "add_" in data:
-                add_box(data, event.reply_token)
+                add_box_reply(data, event.reply_token)
             
             # richmenu switch
             elif "richmenu-changed-to-" in data:
@@ -889,7 +889,7 @@ def add_box_reply(data, reply_token):
                         QuickReplyButton(
                             image_url="https://www.csie.ntu.edu.tw/~r09921006/ac.png",
                             action=PostbackAction(label="label1", data="data1")
-                        ) #for box in ["ac"] in scenarios_on_off[f"{scenario_name}_{column_name}"]
+                        ) for box in ["電扇_fan", "冷氣_ac", "清淨機_af", "掃地機_vacuum"] in scenarios_on_off[f"{scenario_name}_{column_name}"]
                     ]
                 )
             )
