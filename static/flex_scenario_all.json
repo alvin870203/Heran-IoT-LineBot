@@ -137,12 +137,25 @@
                                             "type": "postback",
                                             "data": "remove_ac"
                                         }
+                                    },
+                                    {
+                                        "type": "image",
+                                        "url": "https://placeholder.com/512",
+                                        "size": "36px",
+                                        "position": "absolute",
+                                        "offsetEnd": "none",
+                                        "action": {
+                                            "type": "postback",
+                                            "data": "remove_ac"
+                                        },
+                                        "offsetTop": "none"
                                     }
                                 ],
                                 "borderColor": "#888888",
                                 "borderWidth": "medium",
                                 "cornerRadius": "md",
-                                "backgroundColor": "#FFFFFFcc"
+                                "backgroundColor": "#FFFFFFcc",
+                                "position": "relative"
                             },
                             {
                                 "type": "box",
@@ -190,6 +203,18 @@
                                             "type": "postback",
                                             "data": "remove_fan"
                                         }
+                                    },
+                                    {
+                                        "type": "image",
+                                        "url": "https://placeholder.com/512",
+                                        "size": "36px",
+                                        "position": "absolute",
+                                        "offsetEnd": "none",
+                                        "action": {
+                                            "type": "postback",
+                                            "data": "remove_fan"
+                                        },
+                                        "offsetTop": "none"
                                     }
                                 ],
                                 "borderColor": "#888888",
@@ -290,6 +315,18 @@
                                             "type": "postback",
                                             "data": "remove_af"
                                         }
+                                    },
+                                    {
+                                        "type": "image",
+                                        "url": "https://placeholder.com/512",
+                                        "size": "36px",
+                                        "position": "absolute",
+                                        "offsetEnd": "none",
+                                        "action": {
+                                            "type": "postback",
+                                            "data": "remove_af"
+                                        },
+                                        "offsetTop": "none"
                                     }
                                 ],
                                 "borderColor": "#888888",
@@ -337,9 +374,20 @@
                                         "offsetEnd": "2px",
                                         "action": {
                                             "type": "postback",
-                                            "label": "action",
                                             "data": "remove_vacuum"
                                         }
+                                    },
+                                    {
+                                        "type": "image",
+                                        "url": "https://placeholder.com/512",
+                                        "size": "36px",
+                                        "position": "absolute",
+                                        "offsetEnd": "none",
+                                        "action": {
+                                            "type": "postback",
+                                            "data": "remove_vacuum"
+                                        },
+                                        "offsetTop": "none"
                                     }
                                 ],
                                 "borderColor": "#888888",

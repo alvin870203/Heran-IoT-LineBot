@@ -164,6 +164,18 @@ def get_boxes(scenario):
                         "type": "postback",
                         "data": f"remove_ac_{scenario}"
                     }
+                },
+                {
+                    "type": "image",
+                    "url": "https://placeholder.com/512",
+                    "size": "36px",
+                    "position": "absolute",
+                    "offsetEnd": "none",
+                    "action": {
+                        "type": "postback",
+                        "data": "remove_ac_{scenario}"
+                    },
+                    "offsetTop": "none"
                 }
             ],
             "borderColor": "#888888",
@@ -218,6 +230,18 @@ def get_boxes(scenario):
                         "type": "postback",
                         "data": f"remove_fan_{scenario}"
                     }
+                },
+                {
+                    "type": "image",
+                    "url": "https://placeholder.com/512",
+                    "size": "36px",
+                    "position": "absolute",
+                    "offsetEnd": "none",
+                    "action": {
+                        "type": "postback",
+                        "data": "remove_fan_{scenario}"
+                    },
+                    "offsetTop": "none"
                 }
             ],
             "borderColor": "#888888",
@@ -305,6 +329,18 @@ def get_boxes(scenario):
                         "type": "postback",
                         "data": f"remove_af_{scenario}"
                     }
+                },
+                {
+                    "type": "image",
+                    "url": "https://placeholder.com/512",
+                    "size": "36px",
+                    "position": "absolute",
+                    "offsetEnd": "none",
+                    "action": {
+                        "type": "postback",
+                        "data": "remove_af_{scenario}"
+                    },
+                    "offsetTop": "none"
                 }
             ],
             "borderColor": "#888888",
@@ -356,6 +392,18 @@ def get_boxes(scenario):
                         "label": "action",
                         "data": f"remove_vacuum_{scenario}"
                     }
+                },
+                {
+                    "type": "image",
+                    "url": "https://placeholder.com/512",
+                    "size": "36px",
+                    "position": "absolute",
+                    "offsetEnd": "none",
+                    "action": {
+                        "type": "postback",
+                        "data": "remove_vacuum_{scenario}"
+                    },
+                    "offsetTop": "none"
                 }
             ],
             "borderColor": "#888888",
@@ -407,7 +455,7 @@ def callback():
                         image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='電風扇控制介面',
-                        text=f"狀態: {'開' if fan_on is True else '關'} / 風速: {fan_speed} / 風向: {'擺頭' if fan_turn is True else '固定'}",
+                        text=f"裝置狀態: {'開' if fan_on is True else '關'} / 風速: {fan_speed} / 風向: {'擺頭' if fan_turn is True else '固定'}",
                         actions=[
                             PostbackAction(
                                 label='開機/關機',
@@ -443,7 +491,7 @@ def callback():
                         image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='掃地機控制介面',
-                        text=f"狀態: {'清掃中' if vacuum_on is True else '已回家充電'}",
+                        text=f"裝置狀態: {'清掃中' if vacuum_on is True else '已回家充電'}",
                         actions=[
                             PostbackAction(
                                 label='回家充電/開始清掃',
@@ -464,7 +512,7 @@ def callback():
                         image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='冷氣控制介面',
-                        text=f"狀態: {'開' if ac_on is True else '關'} / 設定溫度: {ac_set_temp} / 環境溫度: {ac_ambient_temp}",
+                        text=f"裝置狀態: {'開' if ac_on is True else '關'} / 設定溫度: {ac_set_temp} / 環境溫度: {ac_ambient_temp}",
                         actions=[
                             PostbackAction(
                                 label='開機/關機',
@@ -495,7 +543,7 @@ def callback():
                         image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='空氣清淨機控制介面',
-                        text=f"狀態: {'開' if af_on is True else '關'} / PM2.5: {af_pm25}",
+                        text=f"裝置狀態: {'開' if af_on is True else '關'} / PM2.5: {af_pm25}",
                         actions=[
                             PostbackAction(
                                 label='開機/關機',
