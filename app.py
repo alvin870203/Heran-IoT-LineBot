@@ -74,18 +74,18 @@ current_tab = "scenario"  # {scenario, living_room, master_bedroom, elder_bedroo
 
 # State of the scenario setting
 scenarios_on_off = {
-    "go_home_on": ["ac_box", "add_box"],
-    "go_home_off": ["af_box", "vacuum_box", "add_box"],
-    "all_go_home_on": ["add_box"],
-    "all_go_home_off": ["add_box"],
-    "go_out_on": ["add_box"],
-    "go_out_off": ["add_box"],
-    "night_on": ["add_box"],
-    "night_off": ["add_box"],
-    "morning_on": ["add_box"],
-    "morning_off": ["add_box"],
-    "noon_on": ["add_box"],
-    "noon_off": ["add_box"]
+    "go_home_on": ["ac_box", "add_box_on"],
+    "go_home_off": ["af_box", "vacuum_box", "add_box_off"],
+    "all_go_home_on": ["add_box_on"],
+    "all_go_home_off": ["add_box_off"],
+    "go_out_on": ["add_box_on"],
+    "go_out_off": ["add_box_off"],
+    "night_on": ["add_box_on"],
+    "night_off": ["add_box_off"],
+    "morning_on": ["add_box_on"],
+    "morning_off": ["add_box_off"],
+    "noon_on": ["add_box_on"],
+    "noon_off": ["add_box_off"]
 }
 
 # re-new a document on MongoDB
@@ -250,7 +250,7 @@ def get_boxes(scenario):
             "backgroundColor": "#FFFFFFcc"
         },
 
-        "add_box": {
+        "add_box_on": {
             "type": "box",
             "layout": "vertical",
             "contents": [
@@ -284,6 +284,43 @@ def get_boxes(scenario):
             "action": {
                 "type": "postback",
                 "data": f"add_on_{scenario}"
+            }
+        },
+
+        "add_box_off": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+                {
+                    "type": "text",
+                    "text": "新增",
+                    "align": "center",
+                    "size": "md",
+                    "offsetTop": "md",
+                    "weight": "bold"
+                },
+                {
+                    "type": "separator",
+                    "margin": "md",
+                    "color": "#dcdede"
+                },
+                {
+                    "type": "text",
+                    "text": "+",
+                    "size": "4xl",
+                    "color": "#4265b4",
+                    "weight": "bold",
+                    "align": "center",
+                    "gravity": "center"
+                }
+            ],
+            "borderColor": "#888888",
+            "borderWidth": "medium",
+            "cornerRadius": "md",
+            "backgroundColor": "#FFFFFFcc",
+            "action": {
+                "type": "postback",
+                "data": f"add_off_{scenario}"
             }
         },
 
