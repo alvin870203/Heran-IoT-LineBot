@@ -69,9 +69,12 @@ vacuum_on = False  # remember to update state manually
 #FIXME: what's the init tab?
 current_tab = "scenario"  # {scenario, living_room, master_bedroom, elder_bedroom}
 
-# State of the go home scenario setting
-scenario_go_home_on = ["ac_box", "add_box"]
-scenario_go_home_off = ["af_box", "vacuum_box", "add_box"]
+# State of the scenario setting
+scenarios_on_off = {
+    "go_home_on": ["ac_box", "add_box"],
+    "go_home_off": ["af_box", "vacuum_box", "add_box"]
+    # TODO: add all the on off boxes
+}
 
 def get_boxes(scenario):
     # device's components for scenario setting
@@ -472,7 +475,7 @@ def callback():
             elif text == "回家模式":
                 flex_contents = go_home_flex()
                 line_bot_api.reply_message(
-                    event.reply_token, [FlexSendMessage(alt_text="(回家模式設定介面)", contents=flex_contents)]
+                    event.reply_token, [FlexSendMessage(alt_text="(設定介面)", contents=flex_contents)]
                 )  # TODO: send another text msg as explanation
             else:
                 line_bot_api.reply_message(
@@ -480,7 +483,7 @@ def callback():
                 )
         elif isinstance(event, PostbackEvent):  # postback event
             data = event.postback.data
-            # TODO: use postback action to send message and resend updated state as text or small flex, to avoid query too fast
+            # TODO: resend updated state as text or small flex
             # on/off control
             if data == "fan_onoff":
                 fan_on_off(event.reply_token)
@@ -502,6 +505,10 @@ def callback():
             # ac setting temperature control
             elif data == "ac_temp_up" or data == "ac_temp_down":
                 ac_control_set_temp(data.split('_')[-1], event.reply_token)
+            
+            # delete boxe in scenario
+            elif "remove_" in data:
+                remove_box(data, event.reply_token)
             
             # richmenu switch
             elif "richmenu-changed-to-" in data:
@@ -666,8 +673,8 @@ def go_home_flex():
     with open("static/flex_scenario_go_home.json", encoding="utf-8") as f:
         flex_dict = json.load(f)
     boxes = get_boxes("go_home")
-    flex_dict["body"]["contents"][0]["contents"][0]["contents"] = [boxes[box] for box in scenario_go_home_on]
-    flex_dict["body"]["contents"][0]["contents"][2]["contents"] = [boxes[box] for box in scenario_go_home_off]
+    flex_dict["body"]["contents"][0]["contents"][0]["contents"] = [boxes[box] for box in scenarios_on_off["go_home_on"]]
+    flex_dict["body"]["contents"][0]["contents"][2]["contents"] = [boxes[box] for box in scenarios_on_off["go_home_off"]]
     return flex_dict
 
 
@@ -746,6 +753,21 @@ def ac_control_set_temp(down_or_up, reply_token):
     else:
         print(f"ERROR: wrong value: {down_or_up=}")
 
+
+def remove_box(data, reply_token):
+    global scenarios_on_off
+    box_name = data.split('_')[1] + "_box"  # >>> ac_box
+    scenario_name = data.replace(f"remove_{data.split('_')[1]}_", '')  # >>> go_home
+    scenarios_on_off[scenario_name + "_on"] = [box for box in scenarios_on_off[scenario_name + "_on"] if box != box_name]
+    scenarios_on_off[scenario_name + "_off"] = [box for box in scenarios_on_off[scenario_name + "_off"] if box != box_name]
+    flex_contents = globals()[scenario_name + "_flex"]()
+    line_bot_api.reply_message(
+        reply_token, 
+        [
+            TextSendMessage(text="已刪除"),
+            FlexSendMessage(alt_text="(設定介面)", contents=flex_contents)
+        ]
+    )
 
 if __name__ == "__main__":
     arg_parser = ArgumentParser(
