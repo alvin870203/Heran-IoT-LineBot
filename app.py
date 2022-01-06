@@ -887,9 +887,11 @@ def add_box_reply(data, reply_token):
                 quick_reply=QuickReply(
                     items=[
                         QuickReplyButton(
-                            image_url="https://www.csie.ntu.edu.tw/~r09921006/ac.png",
-                            action=PostbackAction(label="label1", data="data1")
-                        ) for box in ["電扇_fan", "冷氣_ac", "清淨機_af", "掃地機_vacuum"] in scenarios_on_off[f"{scenario_name}_{column_name}"]
+                            image_url=f"https://www.csie.ntu.edu.tw/~r09921006/{box.split('_')[-1]}.png",
+                            action=PostbackAction(label=box.split('_')[0], data=f"insert_{column_name}_{box.split('_')[-1]}_{scenario_name}")
+                        )
+                        for box in ["電扇_fan", "冷氣_ac", "清淨機_af", "掃地機_vacuum"]
+                        if box.split('_')[-1]+"_box" not in scenarios_on_off[f"{scenario_name}_{column_name}"]
                     ]
                 )
             )
@@ -898,6 +900,7 @@ def add_box_reply(data, reply_token):
 
 
 # def add_box_execute(data, reply_token):
+    # global scenarios_on_off
 
 
 if __name__ == "__main__":
