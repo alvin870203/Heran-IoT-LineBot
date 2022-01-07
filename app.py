@@ -609,10 +609,20 @@ def callback():
                     event.reply_token, [TextSendMessage(text="尚未配對"+text)]
                 )
             elif text == "回家模式":
-                flex_contents = get_flex("go_home")
+                flex_contents = get_flex("go_home", title="回家模式設定介面")
                 line_bot_api.reply_message(
                     event.reply_token, [FlexSendMessage(alt_text="(設定介面)", contents=flex_contents)]
-                )  # TODO: send another text msg as explanation
+                )
+            elif text == "出門模式":
+                flex_contents = get_flex("go_out", title="出門模式設定介面")
+                line_bot_api.reply_message(
+                    event.reply_token, [FlexSendMessage(alt_text="(設定介面)", contents=flex_contents)]
+                )
+            elif text == "全家出門模式":
+                flex_contents = get_flex("all_go_out", title="全家出門設定介面")
+                line_bot_api.reply_message(
+                    event.reply_token, [FlexSendMessage(alt_text="(設定介面)", contents=flex_contents)]
+                )
             elif text == "晚安模式":  # FIXME: activate by request, not by button
                 # TODO: request IoT to execute
                 line_bot_api.reply_message(
@@ -621,6 +631,25 @@ def callback():
                         TextSendMessage(text="關燈"),
                         TextSendMessage(text="關窗簾"),
                         TextSendMessage(text="打開清淨機")
+                    ]
+                )
+            elif text == "早安模式":  # FIXME: activate by request, not by button
+                # TODO: request IoT to execute
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    [
+                        TextSendMessage(text="開燈"),
+                        TextSendMessage(text="開窗簾"),
+                        TextSendMessage(text="關閉清淨機")
+                    ]
+                )
+            elif text == "午安模式":  # FIXME: activate by request, not by button
+                # TODO: request IoT to execute
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    [
+                        TextSendMessage(text="關窗簾"),
+                        TextSendMessage(text="開冷氣")
                     ]
                 )
             else:
@@ -838,10 +867,11 @@ def vacuum_on_off(reply_token):
         print(f"ERROR: wrong af_on value = {vacuum_on}")
 
 
-def get_flex(scenario):
+def get_flex(scenario, title):
     with open(f"static/flex_scenario_{scenario}.json", encoding="utf-8") as f:
         flex_dict = json.load(f)
     boxes = get_boxes(scenario)
+    flex_dict["header"]["contents"][0]["text"] = title
     flex_dict["body"]["contents"][0]["contents"][0]["contents"] = [boxes[box] for box in scenarios_on_off[f"{scenario}_on"]]
     flex_dict["body"]["contents"][0]["contents"][2]["contents"] = [boxes[box] for box in scenarios_on_off[f"{scenario}_off"]]
     return flex_dict
