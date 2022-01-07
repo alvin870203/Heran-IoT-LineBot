@@ -609,17 +609,17 @@ def callback():
                     event.reply_token, [TextSendMessage(text="尚未配對"+text)]
                 )
             elif text == "回家模式":
-                flex_contents = get_flex("go_home", title="回家模式設定介面")
+                flex_contents = get_flex("go_home")
                 line_bot_api.reply_message(
                     event.reply_token, [FlexSendMessage(alt_text="(設定介面)", contents=flex_contents)]
                 )
             elif text == "出門模式":
-                flex_contents = get_flex("go_out", title="出門模式設定介面")
+                flex_contents = get_flex("go_out")
                 line_bot_api.reply_message(
                     event.reply_token, [FlexSendMessage(alt_text="(設定介面)", contents=flex_contents)]
                 )
             elif text == "全家出門模式":
-                flex_contents = get_flex("all_go_out", title="全家出門設定介面")
+                flex_contents = get_flex("all_go_out")
                 line_bot_api.reply_message(
                     event.reply_token, [FlexSendMessage(alt_text="(設定介面)", contents=flex_contents)]
                 )
@@ -872,11 +872,19 @@ def vacuum_on_off(reply_token):
         print(f"ERROR: wrong af_on value = {vacuum_on}")
 
 
-def get_flex(scenario, title):
+def get_flex(scenario):
     with open(f"static/flex_scenario_all.json", encoding="utf-8") as f:
         flex_dict = json.load(f)
     boxes = get_boxes(scenario)
-    flex_dict["header"]["contents"][0]["text"] = title
+    if scenario == "go_out":
+        flex_dict["header"]["contents"][0]["text"] = "出門模式設定介面"
+    elif scenario == "all_go_out":
+        flex_dict["header"]["contents"][0]["text"] = "全家出門模式介面"
+    elif scenario == "go_home":
+        flex_dict["header"]["contents"][0]["text"] = "回家模式設定介面"
+    else:
+        print(f"Wrong value: {scenario=}")
+        
     flex_dict["body"]["contents"][0]["contents"][0]["contents"] = [boxes[box] for box in scenarios_on_off[f"{scenario}_on"]]
     flex_dict["body"]["contents"][0]["contents"][2]["contents"] = [boxes[box] for box in scenarios_on_off[f"{scenario}_off"]]
     return flex_dict
