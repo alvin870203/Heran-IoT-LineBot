@@ -868,7 +868,7 @@ def vacuum_on_off(reply_token):
 
 
 def get_flex(scenario, title):
-    with open(f"static/flex_scenario_{scenario}.json", encoding="utf-8") as f:
+    with open(f"static/flex_scenario_all.json", encoding="utf-8") as f:
         flex_dict = json.load(f)
     boxes = get_boxes(scenario)
     flex_dict["header"]["contents"][0]["text"] = title
