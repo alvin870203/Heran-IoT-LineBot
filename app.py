@@ -76,16 +76,26 @@ current_tab = "scenario"  # {scenario, living_room, master_bedroom, elder_bedroo
 scenarios_on_off = {
     "go_home_on": ["ac_box", "add_box_on"],
     "go_home_off": ["af_box", "vacuum_box", "add_box_off"],
-    "all_go_home_on": ["add_box_on"],
-    "all_go_home_off": ["add_box_off"],
-    "go_out_on": ["add_box_on"],
-    "go_out_off": ["add_box_off"],
+    "all_go_out_on": ["add_box_on"],
+    "all_go_out_off": ["ac_box", "fan_box", "af_box", "vacuum_box", "add_box_off"],
+    "go_out_on": ["af_box", "vacuum_box", "add_box_on"],
+    "go_out_off": ["ac_box", "add_box_off"],
     "night_on": ["add_box_on"],
     "night_off": ["add_box_off"],
     "morning_on": ["add_box_on"],
     "morning_off": ["add_box_off"],
     "noon_on": ["add_box_on"],
     "noon_off": ["add_box_off"]
+}
+
+scenarios_settings = {
+    
+    "go_home": {"speed": 3, "turn": False, "temp": 25},
+    "all_go_out": {"speed": 4, "turn": False, "temp": 28},
+    "go_out": {"speed": 5, "turn": False, "temp": 28},
+    "night": {"speed": 6, "turn": False, "temp": 27},
+    "morning": {"speed": 7, "turn": False, "temp": 26},
+    "noon": {"speed": 8, "turn": False, "temp": 22},
 }
 
 # re-new a document on MongoDB
@@ -107,7 +117,8 @@ def get_state0():
         "af_pm25": af_pm25,
         "vacuum_on": vacuum_on,
         "current_tab": current_tab,
-        "scenarios_on_off": scenarios_on_off
+        "scenarios_on_off": scenarios_on_off,
+        "scenarios_settings": scenarios_settings
     }
     return state0
 object_id_dict = {"_id": ObjectId("61d7363db23cc7cb5c674635")}
@@ -132,7 +143,7 @@ def get_boxes(scenario):
                 },
                 {
                     "type": "text",
-                    "text": f"{'on' if ac_on is True else 'off'} / {ac_set_temp}°C",
+                    "text": f"{'on' if ac_on is True else 'off'} / {scenarios_settings[scenario]['temp']}°C",
                     "size": "sm",
                     "color": "#888888",
                     "align": "center",
@@ -198,7 +209,7 @@ def get_boxes(scenario):
                 },
                 {
                     "type": "text",
-                    "text": f"{'on' if fan_on is True else 'off'} / 風速 {fan_speed} / {'擺頭' if fan_turn is True else '固定'}",
+                    "text": f"{'on' if fan_on is True else 'off'} / 風速 {scenarios_settings[scenario]['speed']} / {'擺頭' if scenarios_settings[scenario]['turn'] is True else '固定'}",
                     "size": "sm",
                     "color": "#888888",
                     "align": "center",
@@ -549,7 +560,7 @@ def callback():
                         image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='冷氣控制介面',
-                        text=f"裝置狀態: {'開' if ac_on is True else '關'} / 設定溫度: {ac_set_temp} / 環境溫度: {ac_ambient_temp}",
+                        text=f"裝置狀態: {'開' if ac_on is True else '關'} / 設定: {ac_set_temp}°C / 環境: {ac_ambient_temp}°C",
                         actions=[
                             PostbackAction(
                                 label='開機/關機',
@@ -602,6 +613,16 @@ def callback():
                 line_bot_api.reply_message(
                     event.reply_token, [FlexSendMessage(alt_text="(設定介面)", contents=flex_contents)]
                 )  # TODO: send another text msg as explanation
+            elif text == "晚安模式":  # FIXME: activate by request, not by button
+                # TODO: request IoT to execute
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    [
+                        TextSendMessage(text="關燈"),
+                        TextSendMessage(text="關窗簾"),
+                        TextSendMessage(text="打開清淨機")
+                    ]
+                )
             else:
                 line_bot_api.reply_message(
                     event.reply_token, [TextSendMessage(text="無此功能")]
@@ -640,6 +661,10 @@ def callback():
                 add_box_reply(data, event.reply_token)
             elif "insert_" in data:
                 add_box_execute(data, event.reply_token)
+            
+            # adjust ac temp or fan speed, turn in scenario
+            elif "adjust_" in data:
+                adjust_box(data, event.reply_token)
             
             # richmenu switch
             elif "richmenu-changed-to-" in data:
@@ -952,6 +977,86 @@ def add_box_execute(data, reply_token):
                 TextSendMessage(text="已新增家電至情境"),
                 FlexSendMessage(alt_text="(設定介面)", contents=flex_contents)
             ]
+        )
+    elif "cancel" in data:
+        line_bot_api.reply_message(
+            reply_token, [TextSendMessage(text="已取消新增")]
+        )
+    else:
+        line_bot_api.reply_message(
+            reply_token, [TextSendMessage(text="無此功能")]
+        )
+
+
+def adjust_box(data, reply_token):  # data = "adjust_speed", "a"
+    task = data.split('_')[1]  # >>> "fan", "ac", "speedUp", "speedDown", "turn", "fixed", "tempUp", "tempDown"
+    scenario_name = data.replace(f"adjust_{task}_", '')
+    global scenarios_settings
+    if task == "fan":
+        line_bot_api.reply_message(
+            reply_token,
+            [
+                TextSendMessage(
+                    text="請選擇欲調整的設定",
+                    quick_reply=QuickReply(
+                        items=[
+                            QuickReplyButton(action=PostbackAction(label="增強風量", data=f"adjust_speedUp_{scenario_name}")),
+                            QuickReplyButton(action=PostbackAction(label="降低風量", data=f"adjust_speedDown_{scenario_name}")),
+                            QuickReplyButton(action=PostbackAction(label="風向固定", data=f"adjust_turn_{scenario_name}")),
+                            QuickReplyButton(action=PostbackAction(label="風向擺頭", data=f"adjust_fixed_{scenario_name}"))
+                        ]
+                    )
+                )
+            ]
+        )
+    elif task == "ac":
+        line_bot_api.reply_message(
+            reply_token,
+            [
+                TextSendMessage(
+                    text="請選擇欲調整的設定",
+                    quick_reply=QuickReply(
+                        items=[
+                            QuickReplyButton(action=PostbackAction(label="溫度升", data=f"adjust_tempUp_{scenario_name}")),
+                            QuickReplyButton(action=PostbackAction(label="溫度降", data=f"adjust_tempDown_{scenario_name}"))
+                        ]
+                    )
+                )
+            ]
+        )
+    elif task == "speedUp":
+        scenarios_settings[scenario_name]["speed"] += 1  #FIXME: clamp the value range
+        line_bot_api.reply_message(
+            reply_token, TextSendMessage(text=f"已設定該模式風速為{scenarios_settings[scenario_name]['speed']}")
+        )
+    elif task == "speedDown":
+        scenarios_settings[scenario_name]["speed"] -= 1  #FIXME: clamp the value range
+        line_bot_api.reply_message(
+            reply_token, TextSendMessage(text=f"已設定該模式風速為{scenarios_settings[scenario_name]['speed']}")
+        )
+    elif task == "turn":
+        scenarios_settings[scenario_name]["turn"] = True
+        line_bot_api.reply_message(
+            reply_token, TextSendMessage(text=f"已設定該模式風向為擺頭")
+        )
+    elif task == "fixed":
+        scenarios_settings[scenario_name]["turn"] = False
+        line_bot_api.reply_message(
+            reply_token, TextSendMessage(text=f"已設定該模式風向為固定")
+        )
+    elif task == "tempUp":
+        scenarios_settings[scenario_name]["temp"] += 1  #FIXME: clamp the value range
+        line_bot_api.reply_message(
+            reply_token, TextSendMessage(text=f"已設定該模式溫度為{scenarios_settings[scenario_name]['temp']}")
+        )
+    elif task == "tempDown":
+        scenarios_settings[scenario_name]["temp"] -= 1  #FIXME: clamp the value range
+        line_bot_api.reply_message(
+            reply_token, TextSendMessage(text=f"已設定該模式溫度為{scenarios_settings[scenario_name]['temp']}")
+        )
+    else:
+        line_bot_api.reply_message(
+            reply_token, TextSendMessage(text="無此功能")
         )
 
 
