@@ -156,7 +156,7 @@ def get_boxes(scenario):
                 },
                 {
                     "type": "image",
-                    "url": "https://www.csie.ntu.edu.tw/~r09921006/ac.png",
+                    "url": "https://serene-stream-27454.herokuapp.com/static/ac.png",
                     "aspectMode": "fit",
                     "aspectRatio": "1.5:1",
                     "action": {
@@ -166,7 +166,7 @@ def get_boxes(scenario):
                 },
                 {
                     "type": "image",
-                    "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
+                    "url": "https://serene-stream-27454.herokuapp.com/static/remove.png",
                     "size": "18px",
                     "position": "absolute",
                     "offsetTop": "2px",
@@ -222,7 +222,7 @@ def get_boxes(scenario):
                 },
                 {
                     "type": "image",
-                    "url": "https://www.csie.ntu.edu.tw/~r09921006/fan.png",
+                    "url": "https://serene-stream-27454.herokuapp.com/static/fan.png",
                     "aspectMode": "fit",
                     "aspectRatio": "1.5:1",
                     "action": {
@@ -232,7 +232,7 @@ def get_boxes(scenario):
                 },
                 {
                     "type": "image",
-                    "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
+                    "url": "https://serene-stream-27454.herokuapp.com/static/remove.png",
                     "size": "18px",
                     "position": "absolute",
                     "offsetTop": "2px",
@@ -362,13 +362,13 @@ def get_boxes(scenario):
                 },
                 {
                     "type": "image",
-                    "url": "https://www.csie.ntu.edu.tw/~r09921006/af.png",
+                    "url": "https://serene-stream-27454.herokuapp.com/static/af.png",
                     "aspectMode": "fit",
                     "aspectRatio": "1.5:1"
                 },
                 {
                     "type": "image",
-                    "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
+                    "url": "https://serene-stream-27454.herokuapp.com/static/remove.png",
                     "size": "18px",
                     "position": "absolute",
                     "offsetTop": "2px",
@@ -424,13 +424,13 @@ def get_boxes(scenario):
                 },
                 {
                     "type": "image",
-                    "url": "https://www.csie.ntu.edu.tw/~r09921006/vacuum.png",
+                    "url": "https://serene-stream-27454.herokuapp.com/static/vacuum.png",
                     "aspectMode": "fit",
                     "aspectRatio": "1.5:1"
                 },
                 {
                     "type": "image",
-                    "url": "https://www.csie.ntu.edu.tw/~r09921006/remove.png",
+                    "url": "https://serene-stream-27454.herokuapp.com/static/remove.png",
                     "size": "18px",
                     "position": "absolute",
                     "offsetTop": "2px",
@@ -499,7 +499,7 @@ def callback():
                 buttons_message_fan = TemplateSendMessage(
                     alt_text='Buttons template',
                     template=ButtonsTemplate(
-                        thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/電風扇.jpg',
+                        thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/fan_white.jpg',
                         image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='電風扇控制介面',
@@ -535,7 +535,7 @@ def callback():
                 buttons_message_vacuum = TemplateSendMessage(
                     alt_text='Buttons template',
                     template=ButtonsTemplate(
-                        thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/掃地機.jpg',
+                        thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/vacuum_white.jpg',
                         image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='掃地機控制介面',
@@ -556,7 +556,7 @@ def callback():
                 buttons_message_ac = TemplateSendMessage(
                     alt_text='Buttons template',
                     template=ButtonsTemplate(
-                        thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/冷氣.jpg',
+                        thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/ac_white.jpg',
                         image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='冷氣控制介面',
@@ -587,7 +587,7 @@ def callback():
                 buttons_message_af = TemplateSendMessage(
                     alt_text='Buttons template',
                     template=ButtonsTemplate(
-                        thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/空氣清淨機.jpg',
+                        thumbnail_image_url='https:/serene-stream-27454.herokuapp.com/static/af_white.jpg',
                         image_aspect_ratio='rectangle',
                         image_size='contain',
                         title='空氣清淨機控制介面',
@@ -981,7 +981,7 @@ def add_box_reply(data, reply_token):
                 quick_reply=QuickReply(
                     items=[
                         QuickReplyButton(
-                            image_url=f"https://www.csie.ntu.edu.tw/~r09921006/{box.split('_')[-1]}_white.jpg",
+                            image_url=f"https://serene-stream-27454.herokuapp.com/static/{box.split('_')[-1]}_white.jpg",
                             action=PostbackAction(label=box.split('_')[0], data=f"insert_{column_name}_{box.split('_')[-1]}_{scenario_name}")
                         )
                         for box in ["電扇_fan", "冷氣_ac", "清淨機_af", "掃地機_vacuum"]
