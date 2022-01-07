@@ -890,6 +890,13 @@ def get_info(room):
     info_dict["body"]["contents"][2]["contents"][2]["contents"][1]["contents"][1]["text"] = f"裝置狀態: {'開' if ac_on else '關'}"
     info_dict["body"]["contents"][4]["contents"][0]["contents"][1]["contents"][1]["text"] = f"裝置狀態: {'開' if af_on else '關'}"
     info_dict["body"]["contents"][4]["contents"][2]["contents"][1]["contents"][1]["text"] = f"裝置狀態: {'開' if vacuum_on else '關'}"
+    
+    info_dict["body"]["contents"][2]["contents"][0]["contents"][1]["contents"][2]["text"] = f"風速: {fan_speed}"
+    info_dict["body"]["contents"][2]["contents"][0]["contents"][1]["contents"][3]["text"] = f"風向: {'擺頭' if fan_turn else '固定'}"
+    info_dict["body"]["contents"][2]["contents"][2]["contents"][1]["contents"][2]["text"] = f"環境: {ac_ambient_temp}°C"
+    info_dict["body"]["contents"][2]["contents"][2]["contents"][1]["contents"][3]["text"] = f"設定: {ac_set_temp}°C"
+    info_dict["body"]["contents"][4]["contents"][0]["contents"][1]["contents"][2]["text"] = f"PM2.5: {af_pm25}"
+    info_dict["body"]["contents"][4]["contents"][2]["contents"][1]["contents"][2]["text"] = f"{'掃地中' if vacuum_on else '充電中'}"
     return info_dict
 
 
