@@ -52,7 +52,6 @@
                                 "contents": [
                                     {
                                         "type": "text",
-                                        "contents": [],
                                         "size": "lg",
                                         "wrap": true,
                                         "text": "電風扇",
@@ -61,8 +60,7 @@
                                     {
                                         "type": "text",
                                         "text": "裝置狀態: 開",
-                                        "size": "sm",
-                                        "contents": []
+                                        "size": "sm"
                                     },
                                     {
                                         "type": "text",
@@ -112,7 +110,6 @@
                                 "contents": [
                                     {
                                         "type": "text",
-                                        "contents": [],
                                         "size": "lg",
                                         "wrap": true,
                                         "text": "冷氣",
@@ -121,8 +118,7 @@
                                     {
                                         "type": "text",
                                         "text": "裝置狀態: 開",
-                                        "size": "sm",
-                                        "contents": []
+                                        "size": "sm"
                                     },
                                     {
                                         "type": "text",
@@ -178,7 +174,6 @@
                                 "contents": [
                                     {
                                         "type": "text",
-                                        "contents": [],
                                         "size": "lg",
                                         "wrap": true,
                                         "text": "清淨機",
@@ -187,8 +182,7 @@
                                     {
                                         "type": "text",
                                         "text": "裝置狀態: 開",
-                                        "size": "sm",
-                                        "contents": []
+                                        "size": "sm"
                                     },
                                     {
                                         "type": "text",
@@ -233,7 +227,6 @@
                                 "contents": [
                                     {
                                         "type": "text",
-                                        "contents": [],
                                         "size": "lg",
                                         "wrap": true,
                                         "text": "掃地機",
@@ -242,8 +235,7 @@
                                     {
                                         "type": "text",
                                         "text": "裝置狀態: 開",
-                                        "size": "sm",
-                                        "contents": []
+                                        "size": "sm"
                                     },
                                     {
                                         "type": "text",
