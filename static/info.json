@@ -14,13 +14,13 @@
                 "flex": 1,
                 "position": "absolute",
                 "offsetBottom": "none",
-                "backgroundColor": "#ffffffff"
+                "backgroundColor": "#ffffff00"
             },
             {
                 "type": "image",
                 "url": "https://placeholder.com/10",
                 "size": "xxs",
-                "backgroundColor": "#ffffffff"
+                "backgroundColor": "#ffffff00"
             },
             {
                 "type": "box",
