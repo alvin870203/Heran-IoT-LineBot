@@ -886,10 +886,10 @@ def get_info(room):
     with open(f"static/info.json", encoding="utf-8") as f:
         info_dict = json.load(f)
     info_dict["body"]["contents"][0]["url"] = f"https://serene-stream-27454.herokuapp.com/static/{room}.jpg"
-    info_dict["body"]["contents"][2]["contents"][0]["contents"][1]["contents"][1] = f"裝置狀態: {'開' if fan_on else '關'}"
-    info_dict["body"]["contents"][2]["contents"][2]["contents"][1]["contents"][1] = f"裝置狀態: {'開' if ac_on else '關'}"
-    info_dict["body"]["contents"][4]["contents"][0]["contents"][1]["contents"][1] = f"裝置狀態: {'開' if af_on else '關'}"
-    info_dict["body"]["contents"][4]["contents"][2]["contents"][1]["contents"][1] = f"裝置狀態: {'開' if vacuum_on else '關'}"
+    info_dict["body"]["contents"][2]["contents"][0]["contents"][1]["contents"][1]["text"] = f"裝置狀態: {'開' if fan_on else '關'}"
+    info_dict["body"]["contents"][2]["contents"][2]["contents"][1]["contents"][1]["text"] = f"裝置狀態: {'開' if ac_on else '關'}"
+    info_dict["body"]["contents"][4]["contents"][0]["contents"][1]["contents"][1]["text"] = f"裝置狀態: {'開' if af_on else '關'}"
+    info_dict["body"]["contents"][4]["contents"][2]["contents"][1]["contents"][1]["text"] = f"裝置狀態: {'開' if vacuum_on else '關'}"
     return info_dict
 
 
