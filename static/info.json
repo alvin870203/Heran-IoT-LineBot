@@ -1,0 +1,266 @@
+{
+    "type": "bubble",
+    "size": "giga",
+    "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+            {
+                "type": "image",
+                "url": "https://serene-stream-27454.herokuapp.com/static/livingRoom.jpg",
+                "size": "full",
+                "aspectMode": "cover",
+                "aspectRatio": "1.6:1",
+                "flex": 1,
+                "position": "absolute",
+                "offsetBottom": "none",
+                "backgroundColor": "#ffffffff"
+            },
+            {
+                "type": "image",
+                "url": "https://placeholder.com/10",
+                "size": "xxs",
+                "backgroundColor": "#ffffffff"
+            },
+            {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                    {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                    {
+                                        "type": "image",
+                                        "url": "https://serene-stream-27454.herokuapp.com/static/fan.png",
+                                        "aspectMode": "cover",
+                                        "size": "full"
+                                    }
+                                ],
+                                "cornerRadius": "100px",
+                                "width": "72px",
+                                "height": "72px",
+                                "offsetTop": "md"
+                            },
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                    {
+                                        "type": "text",
+                                        "contents": [],
+                                        "size": "lg",
+                                        "wrap": true,
+                                        "text": "電風扇",
+                                        "weight": "bold"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "裝置狀態: 開",
+                                        "size": "sm",
+                                        "contents": []
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "風速: 3",
+                                        "size": "sm"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "風向: 固定",
+                                        "size": "sm"
+                                    }
+                                ],
+                                "paddingTop": "xs"
+                            }
+                        ],
+                        "spacing": "md",
+                        "paddingAll": "md",
+                        "backgroundColor": "#ccccccdd"
+                    },
+                    {
+                        "type": "separator",
+                        "margin": "sm"
+                    },
+                    {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                    {
+                                        "type": "image",
+                                        "url": "https://serene-stream-27454.herokuapp.com/static/ac.png",
+                                        "aspectMode": "cover",
+                                        "size": "full"
+                                    }
+                                ],
+                                "cornerRadius": "100px",
+                                "width": "72px",
+                                "height": "72px",
+                                "offsetTop": "md"
+                            },
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                    {
+                                        "type": "text",
+                                        "contents": [],
+                                        "size": "lg",
+                                        "wrap": true,
+                                        "text": "冷氣",
+                                        "weight": "bold"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "裝置狀態: 開",
+                                        "size": "sm",
+                                        "contents": []
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "環境: 23°C",
+                                        "size": "sm"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "設定: 23°C",
+                                        "size": "sm"
+                                    }
+                                ],
+                                "paddingTop": "xs"
+                            }
+                        ],
+                        "spacing": "md",
+                        "paddingAll": "md",
+                        "backgroundColor": "#ccccccdd"
+                    }
+                ]
+            },
+            {
+                "type": "separator",
+                "margin": "sm"
+            },
+            {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                    {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                    {
+                                        "type": "image",
+                                        "url": "https://serene-stream-27454.herokuapp.com/static/af.png",
+                                        "aspectMode": "cover",
+                                        "size": "full"
+                                    }
+                                ],
+                                "cornerRadius": "100px",
+                                "width": "72px",
+                                "height": "72px",
+                                "offsetTop": "xs"
+                            },
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                    {
+                                        "type": "text",
+                                        "contents": [],
+                                        "size": "lg",
+                                        "wrap": true,
+                                        "text": "清淨機",
+                                        "weight": "bold"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "裝置狀態: 開",
+                                        "size": "sm",
+                                        "contents": []
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "PM2.5: 29.0",
+                                        "size": "sm"
+                                    }
+                                ],
+                                "paddingTop": "xs"
+                            }
+                        ],
+                        "spacing": "md",
+                        "paddingAll": "md",
+                        "backgroundColor": "#ccccccdd"
+                    },
+                    {
+                        "type": "separator",
+                        "margin": "sm"
+                    },
+                    {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                    {
+                                        "type": "image",
+                                        "url": "https://serene-stream-27454.herokuapp.com/static/vacuum.png",
+                                        "aspectMode": "cover",
+                                        "size": "sm"
+                                    }
+                                ],
+                                "cornerRadius": "100px",
+                                "width": "72px",
+                                "height": "72px",
+                                "offsetTop": "xs"
+                            },
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                    {
+                                        "type": "text",
+                                        "contents": [],
+                                        "size": "lg",
+                                        "wrap": true,
+                                        "text": "掃地機",
+                                        "weight": "bold"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "裝置狀態: 開",
+                                        "size": "sm",
+                                        "contents": []
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "充電中",
+                                        "size": "sm"
+                                    }
+                                ],
+                                "paddingTop": "xs"
+                            }
+                        ],
+                        "spacing": "md",
+                        "paddingAll": "md",
+                        "backgroundColor": "#ccccccdd"
+                    }
+                ]
+            }
+        ],
+        "paddingAll": "0px"
+    }
+}

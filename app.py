@@ -652,6 +652,11 @@ def callback():
                         TextSendMessage(text="開冷氣")
                     ]
                 )
+            elif "資訊" in text:
+                info_contents = get_info(text.replace("資訊", ''))
+                line_bot_api.reply_message(
+                    event.reply_token, [FlexSendMessage(alt_text="(資訊總覽))", contents=info_contents)]
+                )
             else:
                 line_bot_api.reply_message(
                     event.reply_token, [TextSendMessage(text="無此功能")]
@@ -875,6 +880,17 @@ def get_flex(scenario, title):
     flex_dict["body"]["contents"][0]["contents"][0]["contents"] = [boxes[box] for box in scenarios_on_off[f"{scenario}_on"]]
     flex_dict["body"]["contents"][0]["contents"][2]["contents"] = [boxes[box] for box in scenarios_on_off[f"{scenario}_off"]]
     return flex_dict
+
+
+def get_info(room):
+    with open(f"static/info.json", encoding="utf-8") as f:
+        info_dict = json.load(f)
+    info_dict["body"]["contents"][0]["url"] = f"https://serene-stream-27454.herokuapp.com/static/{room}.jpg"
+    info_dict["body"]["contents"][2]["contents"][0]["contents"][1]["contents"][1] = f"裝置狀態: {'開' if fan_on else '關'}"
+    info_dict["body"]["contents"][2]["contents"][2]["contents"][1]["contents"][1] = f"裝置狀態: {'開' if ac_on else '關'}"
+    info_dict["body"]["contents"][4]["contents"][0]["contents"][1]["contents"][1] = f"裝置狀態: {'開' if af_on else '關'}"
+    info_dict["body"]["contents"][4]["contents"][2]["contents"][1]["contents"][1] = f"裝置狀態: {'開' if vacuum_on else '關'}"
+    return info_dict
 
 
 def fan_control_speed_up(reply_token):
