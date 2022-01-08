@@ -899,7 +899,7 @@ def get_info(room):
     elif room == "主臥":
         info_dict["body"]["contents"][0]["url"] = f"https://serene-stream-27454.herokuapp.com/static/masterBedroom.jpg"
     elif room == "長輩房":
-        info_dict["body"]["contents"][0]["url"] = f"https://serene-stream-27454.herokuapp.com/static/elderRoom.jpg"
+        info_dict["body"]["contents"][0]["url"] = f"https://serene-stream-27454.herokuapp.com/static/elderBedroom.jpg"
     else:
         pass
     info_dict["body"]["contents"][2]["contents"][0]["contents"][1]["contents"][1]["text"] = f"裝置狀態: {'開' if fan_on else '關'}"
