@@ -52,7 +52,7 @@ headers = {"Authorization": "Bearer " + access_token}  # OAuth2.0 url for applia
 
 # State of the devices
 # - Fan
-fan_id = "a00abf394b1c"
+fan_id = "a00abf394b1c"#"a00abf394b1c"
 fan_on = None  # True, False
 fan_speed = -1  # int
 fan_turn = None  # True, False
