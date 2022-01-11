@@ -606,7 +606,11 @@ def callback():
                 )
             elif text == "除濕機":
                 line_bot_api.reply_message(
-                    event.reply_token, [TextSendMessage(text="回家模式已啟動"+text)]  #FIXME: change back to "尚未配對"
+                    event.reply_token, [TextSendMessage(text="尚未配對"+text)]
+                )
+            elif text == "啟動回家模式":
+                line_bot_api.reply_message(
+                    event.reply_token, [TextSendMessage(text="回家模式已啟動")]
                 )
             elif text == "回家模式":
                 flex_contents = get_flex("go_home")
