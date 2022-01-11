@@ -52,7 +52,7 @@ headers = {"Authorization": "Bearer " + access_token}  # OAuth2.0 url for applia
 
 # State of the devices
 # - Fan
-fan_id = "a00abf394b1c"#"a00abf394b1c"
+fan_id = "a00abf394b1c"
 fan_on = None  # True, False
 fan_speed = -1  # int
 fan_turn = None  # True, False
@@ -746,15 +746,15 @@ def update_devices_state():
             fan_speed = int(device[fan_id]["currentFanSpeedSetting"])
             fan_turn = bool(device[fan_id]["currentToggleSettings"]["turn_toggle"])
             print(f"Update fan: {fan_on=}, {fan_speed=}, {fan_turn=}")
-        elif ac_id in device.keys():
-            ac_on = bool(device[ac_id]["on"])
-            ac_set_temp = int(device[ac_id]["thermostatTemperatureSetpoint"])
-            ac_ambient_temp = int(device[ac_id]["thermostatTemperatureAmbient"])
-            print(f"Update ac: {ac_on=}, {ac_set_temp=}, {ac_ambient_temp=}")
-        elif af_id in device.keys():
-            af_on = bool(device[af_id]["on"])
-            af_pm25 = float(device[af_id]["currentSensorStateData"][0]["rawValue"])  #FIXME: float or int ?
-            print(f"Update af: {af_on=}, {af_pm25=}")
+        # elif ac_id in device.keys():
+        #     ac_on = bool(device[ac_id]["on"])
+        #     ac_set_temp = int(device[ac_id]["thermostatTemperatureSetpoint"])
+        #     ac_ambient_temp = int(device[ac_id]["thermostatTemperatureAmbient"])
+        #     print(f"Update ac: {ac_on=}, {ac_set_temp=}, {ac_ambient_temp=}")
+        # elif af_id in device.keys():
+        #     af_on = bool(device[af_id]["on"])
+        #     af_pm25 = float(device[af_id]["currentSensorStateData"][0]["rawValue"])  #FIXME: float or int ?
+        #     print(f"Update af: {af_on=}, {af_pm25=}")
         else:
             print(f"Unknown device: {device.keys()}")
     # boxes["ac_box"]["contents"][1]["text"] = f"{'on' if ac_on is True else 'off'} / {ac_set_temp}°C"
