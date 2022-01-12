@@ -65,9 +65,9 @@ ac_ambient_temp = -1  # int
 af_id = "a00abf1ddb09"
 af_on = None  # True, False
 af_pm25 = -1.  # float
-# - vacuum - FIXME: no vacuum yet, can't update state, temporally init as off
-vacuum_id = "no_id_yet"
-vacuum_on = False  # remember to update state manually
+# - vacuum
+vacuum_id = "54752861b4e62d526cdb"
+vacuum_on = None  # True, False
 
 #FIXME: what's the init tab?
 current_tab = "scenario"  # {scenario, living_room, master_bedroom, elder_bedroom}
@@ -730,8 +730,8 @@ def update_devices_state():
                 "devices": [
                     {"id": ac_id},  # A/C
                     {"id": af_id},  # A/F
-                    {"id": fan_id}   # fan
-                    #FIXME: can't update vacuum state yet
+                    {"id": fan_id},   # fan
+                    {"id": vacuum_id}   # vacuum
                 ]
             }
         }]
@@ -741,20 +741,23 @@ def update_devices_state():
     print(r_dict)
     for device in r_dict["payload"]["devices"]:
         #FIXME: can't update vacuum state yet
-        if fan_id in device.keys():
+        if fan_id in device.keys() and device[fan_id]["status"] == "SUCCESS":
             fan_on = bool(device[fan_id]["on"])
             fan_speed = int(device[fan_id]["currentFanSpeedSetting"])
             fan_turn = bool(device[fan_id]["currentToggleSettings"]["turn_toggle"])
             print(f"Update fan: {fan_on=}, {fan_speed=}, {fan_turn=}")
-        # elif ac_id in device.keys():
-        #     ac_on = bool(device[ac_id]["on"])
-        #     ac_set_temp = int(device[ac_id]["thermostatTemperatureSetpoint"])
-        #     ac_ambient_temp = int(device[ac_id]["thermostatTemperatureAmbient"])
-        #     print(f"Update ac: {ac_on=}, {ac_set_temp=}, {ac_ambient_temp=}")
-        # elif af_id in device.keys():
-        #     af_on = bool(device[af_id]["on"])
-        #     af_pm25 = float(device[af_id]["currentSensorStateData"][0]["rawValue"])  #FIXME: float or int ?
-        #     print(f"Update af: {af_on=}, {af_pm25=}")
+        elif ac_id in device.keys() and device[ac_id]["status"] == "SUCCESS":
+            ac_on = bool(device[ac_id]["on"])
+            ac_set_temp = int(device[ac_id]["thermostatTemperatureSetpoint"])
+            ac_ambient_temp = int(device[ac_id]["thermostatTemperatureAmbient"])
+            print(f"Update ac: {ac_on=}, {ac_set_temp=}, {ac_ambient_temp=}")
+        elif af_id in device.keys() and device[af_id]["status"] == "SUCCESS":
+            af_on = bool(device[af_id]["on"])
+            af_pm25 = float(device[af_id]["currentSensorStateData"][0]["rawValue"])  #FIXME: float or int ?
+            print(f"Update af: {af_on=}, {af_pm25=}")
+        elif vacuum_id in device.keys() and device[vacuum_id]["status"] == "SUCCESS":
+            vacuum_on = bool(device[vacuum_id]["isRunning"])
+            print(f"Update vacuum: {vacuum_on=}")
         else:
             print(f"Unknown device: {device.keys()}")
     # boxes["ac_box"]["contents"][1]["text"] = f"{'on' if ac_on is True else 'off'} / {ac_set_temp}°C"
@@ -848,32 +851,29 @@ def af_on_off(reply_token):
 
 
 def vacuum_on_off(reply_token):
-    global vacuum_on  #FIXME: vacuum state and control are not implemented yet
     with open("static/body_onoff.json", encoding="utf-8") as f:
             body = json.load(f)
     body["inputs"][0]["payload"]["commands"][0]["devices"][0]["id"] = vacuum_id
     if vacuum_on is True:
-        body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"]["on"] = False
-        #FIXME: vacuum state and control are not implemented yet
-        # r = requests.post(url, data=json.dumps(body), headers=headers)
-        # r_dict = r.json()
-        # print(r_dict)
-        vacuum_on = False
+        body["inputs"][0]["payload"]["commands"][0]["execution"][0]["command"] = "action.devices.commands.Dock"
+        body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"] = {}
+        r = requests.post(url, data=json.dumps(body), headers=headers)
+        r_dict = r.json()
+        print(r_dict)
         line_bot_api.reply_message(
             reply_token, TextSendMessage(text="掃地機已回家")
         )
     elif vacuum_on is False:
-        body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"]["on"] = True
-        #FIXME: vacuum state and control are not implemented yet
-        # r = requests.post(url, data=json.dumps(body), headers=headers)
-        # r_dict = r.json()
-        # print(r_dict)
-        vacuum_on = True
+        body["inputs"][0]["payload"]["commands"][0]["execution"][0]["command"] = "action.devices.commands.StartStop"
+        body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"] = {"start": True}
+        r = requests.post(url, data=json.dumps(body), headers=headers)
+        r_dict = r.json()
+        print(r_dict)
         line_bot_api.reply_message(
             reply_token, TextSendMessage(text="掃地機開始打掃")
         )
     else:
-        print(f"ERROR: wrong af_on value = {vacuum_on}")
+        print(f"ERROR: wrong vacuum_on value = {vacuum_on}")
 
 
 def get_flex(scenario):
