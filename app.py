@@ -741,21 +741,21 @@ def update_devices_state():
     print(r_dict)
     for device in r_dict["payload"]["devices"]:
         #FIXME: can't update vacuum state yet
-        if fan_id in device.keys() and device[fan_id]["status"] == "SUCCESS":
+        if fan_id in device.keys() and device[fan_id]["online"] == True:
             fan_on = bool(device[fan_id]["on"])
             fan_speed = int(device[fan_id]["currentFanSpeedSetting"])
             fan_turn = bool(device[fan_id]["currentToggleSettings"]["turn_toggle"])
             print(f"Update fan: {fan_on=}, {fan_speed=}, {fan_turn=}")
-        elif ac_id in device.keys() and device[ac_id]["status"] == "SUCCESS":
+        elif ac_id in device.keys() and device[ac_id]["online"] == True:
             ac_on = bool(device[ac_id]["on"])
             ac_set_temp = int(device[ac_id]["thermostatTemperatureSetpoint"])
             ac_ambient_temp = int(device[ac_id]["thermostatTemperatureAmbient"])
             print(f"Update ac: {ac_on=}, {ac_set_temp=}, {ac_ambient_temp=}")
-        elif af_id in device.keys() and device[af_id]["status"] == "SUCCESS":
+        elif af_id in device.keys() and device[af_id]["online"] == True:
             af_on = bool(device[af_id]["on"])
             af_pm25 = float(device[af_id]["currentSensorStateData"][0]["rawValue"])  #FIXME: float or int ?
             print(f"Update af: {af_on=}, {af_pm25=}")
-        elif vacuum_id in device.keys() and device[vacuum_id]["status"] == "SUCCESS":
+        elif vacuum_id in device.keys() and device[vacuum_id]["online"] == True":
             vacuum_on = bool(device[vacuum_id]["isRunning"])
             print(f"Update vacuum: {vacuum_on=}")
         else:
