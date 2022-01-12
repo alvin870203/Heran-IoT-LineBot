@@ -858,6 +858,7 @@ def vacuum_on_off(reply_token):
         body["inputs"][0]["payload"]["commands"][0]["execution"][0]["command"] = "action.devices.commands.Dock"
         body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"] = {}
         r = requests.post(url, data=json.dumps(body), headers=headers)
+        # r_dict = json.loads(r.text.replace("123", ''))
         r_dict = r.json()
         print(r_dict)
         line_bot_api.reply_message(
@@ -867,7 +868,7 @@ def vacuum_on_off(reply_token):
         body["inputs"][0]["payload"]["commands"][0]["execution"][0]["command"] = "action.devices.commands.StartStop"
         body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"] = {"start": True}
         r = requests.post(url, data=json.dumps(body), headers=headers)
-        r_dict = r.json()
+        r_dict = json.loads(r.text.replace("123", ''))
         print(r_dict)
         line_bot_api.reply_message(
             reply_token, TextSendMessage(text="掃地機開始打掃")
