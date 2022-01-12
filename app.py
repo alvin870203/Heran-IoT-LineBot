@@ -755,7 +755,7 @@ def update_devices_state():
             af_on = bool(device[af_id]["on"])
             af_pm25 = float(device[af_id]["currentSensorStateData"][0]["rawValue"])  #FIXME: float or int ?
             print(f"Update af: {af_on=}, {af_pm25=}")
-        elif vacuum_id in device.keys() and device[vacuum_id]["online"] == True":
+        elif vacuum_id in device.keys() and device[vacuum_id]["online"] == True:
             vacuum_on = bool(device[vacuum_id]["isRunning"])
             print(f"Update vacuum: {vacuum_on=}")
         else:
