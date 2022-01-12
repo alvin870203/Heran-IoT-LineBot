@@ -721,7 +721,7 @@ def callback():
 
 
 def update_devices_state():
-    global fan_on, fan_speed, fan_turn, ac_on, ac_set_temp, ac_ambient_temp, af_on, af_pm25#, boxes
+    global fan_on, fan_speed, fan_turn, ac_on, ac_set_temp, ac_ambient_temp, af_on, af_pm25, vacuum_on#, boxes
     body = {
         "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf",
         "inputs": [{
