@@ -629,7 +629,7 @@ def callback():
                 )
             elif text == "晚安模式":  # FIXME: activate by request, not by button
                 # TODO: request IoT to execute
-                vacuum_on_off(event.reply_token)
+                vacuum_on_off_night(event.reply_token)
                 line_bot_api.reply_message(
                     event.reply_token,
                     [
@@ -850,6 +850,21 @@ def af_on_off(reply_token):
         )
     else:
         print(f"ERROR: wrong af_on value = {af_on}")
+
+
+def vacuum_on_off_night(reply_token):
+    with open("static/body_onoff.json", encoding="utf-8") as f:
+            body = json.load(f)
+    body["inputs"][0]["payload"]["commands"][0]["devices"][0]["id"] = vacuum_id
+    body["inputs"][0]["payload"]["commands"][0]["execution"][0]["command"] = "action.devices.commands.Dock"
+    body["inputs"][0]["payload"]["commands"][0]["execution"][0]["params"] = {}
+    r = requests.post(url, data=json.dumps(body), headers=headers)
+    # r_dict = json.loads(r.text.replace("123", ''))
+    r_dict = r.json()
+    print(r_dict)
+    line_bot_api.reply_message(
+        reply_token, TextSendMessage(text="掃地機已回家")
+    )
 
 
 def vacuum_on_off(reply_token):
