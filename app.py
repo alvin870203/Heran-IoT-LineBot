@@ -629,12 +629,14 @@ def callback():
                 )
             elif text == "晚安模式":  # FIXME: activate by request, not by button
                 # TODO: request IoT to execute
+                vacuum_on_off(event.reply_token)
                 line_bot_api.reply_message(
                     event.reply_token,
                     [
                         TextSendMessage(text="關燈"),
                         TextSendMessage(text="關窗簾"),
-                        TextSendMessage(text="打開清淨機")
+                        TextSendMessage(text="打開清淨機"),
+                        TextSendMessage(text="掃地機回家")
                     ]
                 )
             elif text == "早安模式":  # FIXME: activate by request, not by button
