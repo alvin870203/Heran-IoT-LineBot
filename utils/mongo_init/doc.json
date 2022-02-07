@@ -1,0 +1,54 @@
+{
+    "_id": "61d7363db23cc7cb5c674635",
+    "fan_on": true,
+    "fan_speed": -1,
+    "fan_turn": null,
+    "ac_on": null,
+    "ac_set_temp": -1,
+    "ac_ambient_temp": -1,
+    "af_on": null,
+    "af_pm25": -1.0,
+    "vacuum_on": false,
+    "current_tab": "scenario",
+    "scenarios_on_off": {
+        "go_home_on": [
+            "ac_box",
+            "add_box"
+        ],
+        "go_home_off": [
+            "af_box",
+            "vacuum_box",
+            "add_box"
+        ],
+        "all_go_home_on": [
+            "add_box"
+        ],
+        "all_go_home_off": [
+            "add_box"
+        ],
+        "go_out_on": [
+            "add_box"
+        ],
+        "go_out_off": [
+            "add_box"
+        ],
+        "night_on": [
+            "add_box"
+        ],
+        "night_off": [
+            "add_box"
+        ],
+        "morning_on": [
+            "add_box"
+        ],
+        "morning_off": [
+            "add_box"
+        ],
+        "noon_on": [
+            "add_box"
+        ],
+        "noon_off": [
+            "add_box"
+        ]
+    }
+}

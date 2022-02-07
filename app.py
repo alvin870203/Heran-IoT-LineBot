@@ -99,7 +99,7 @@ scenarios_settings = {
 }
 
 # re-new a document on MongoDB
-cluster = "mongodb+srv://alvin870203:Lmjh990231@cluster0.5iust.mongodb.net/line_bot?retryWrites=true&w=majority"
+cluster = # enter the string in replace_cluster_with_this_string.txt
 client = pymongo.MongoClient(cluster)
 print(client.list_database_names())
 db = client.line_bot

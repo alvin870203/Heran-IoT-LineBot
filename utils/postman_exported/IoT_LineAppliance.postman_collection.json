@@ -1,0 +1,626 @@
+{
+	"info": {
+		"_postman_id": "f0480100-0ec6-4d44-9e8c-49650c42e3b5",
+		"name": "IoT_LineAppliance",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Line",
+			"item": [
+				{
+					"name": "Delete rich menu alias",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer kv7jk24WGVyrxdaWgHp0fEZnyuql5FUM6TdppyQrehca1ACgXGIgfrxXfeMnG44jlwoJOjZ8czICeCvBCCLIq0sScVGF1TAqqfvcSa9bVHJOcPR3SrXq2tq57PVYdYByQuPATvWve8bnJ1S1oEA5FQdB04t89/1O/w1cDnyilFU=",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.line.me/v2/bot/richmenu/alias/richmenu-alias-elder_bedroom",
+							"protocol": "https",
+							"host": [
+								"api",
+								"line",
+								"me"
+							],
+							"path": [
+								"v2",
+								"bot",
+								"richmenu",
+								"alias",
+								"richmenu-alias-elder_bedroom"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "IoT",
+			"item": [
+				{
+					"name": "Discover appliance(succeed)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\r\n  \"inputs\": [\r\n    {\r\n      \"intent\": \"action.devices.SYNC\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://iot.jowinwin.com/iot_tds/control.php",
+							"protocol": "https",
+							"host": [
+								"iot",
+								"jowinwin",
+								"com"
+							],
+							"path": [
+								"iot_tds",
+								"control.php"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Discover appliance",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer 3ca023a32a2249a00fa8282a0686e30acdb8cfd5",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\r\n  \"inputs\": [\r\n    {\r\n      \"intent\": \"action.devices.SYNC\"\r\n    }\r\n  ]\r\n}"
+								},
+								"url": {
+									"raw": "https://iot.jowinwin.com/iot_tds/control.php",
+									"protocol": "https",
+									"host": [
+										"iot",
+										"jowinwin",
+										"com"
+									],
+									"path": [
+										"iot_tds",
+										"control.php"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 01 Jan 2022 18:32:51 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.18 (Ubuntu)"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\n    \"payload\": {\n        \"devices\": [\n            {\n                \"id\": \"a00abf1dd7e7\",\n                \"type\": \"action.devices.types.AC_UNIT\",\n                \"traits\": [\n                    \"action.devices.traits.OnOff\",\n                    \"action.devices.traits.TemperatureSetting\",\n                    \"action.devices.traits.FanSpeed\",\n                    \"action.devices.traits.Toggles\"\n                ],\n                \"name\": {\n                    \"name\": \"空調\"\n                },\n                \"willReportState\": false,\n                \"attributes\": {\n                    \"availableFanSpeeds\": {\n                        \"speeds\": [\n                            {\n                                \"speed_name\": \"speed_auto\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            \"自動\",\n                                            \"0\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_low\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            \"最低\",\n                                            \"最小\",\n                                            \"最弱\",\n                                            \"低\",\n                                            \"小\",\n                                            \"弱\",\n                                            \"1\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_medium\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            \"中\",\n                                            \"一般\",\n                                            \"2\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_high\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            \"最高\",\n                                            \"最大\",\n                                            \"最強\",\n                                            \"高\",\n                                            \"大\",\n                                            \"強\",\n                                            \"3\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_up\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            \"高一點\",\n                                            \"大一點\",\n                                            \"強一點\",\n                                            \"增加\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_dow\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            \"低一點\",\n                                            \"小一點\",\n                                            \"弱一點\",\n                                            \"減少\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            }\n                        ]\n                    },\n                    \"availableToggles\": [\n                        {\n                            \"name\": \"sleep_mode\",\n                            \"name_values\": [\n                                {\n                                    \"name_synonym\": [\n                                        \"睡眠模式\",\n                                        \"睡覺模式\",\n                                        \"舒眠模式\",\n                                        \"睡眠\",\n                                        \"睡覺\",\n                                        \"舒眠\"\n                                    ],\n                                    \"lang\": \"zh\"\n                                }\n                            ]\n                        }\n                    ],\n                    \"availableThermostatModes\": [\n                        \"heat\",\n                        \"cool\",\n                        \"dry\",\n                        \"fan-only\",\n                        \"auto\"\n                    ],\n                    \"thermostatTemperatureUnit\": \"C\"\n                },\n                \"deviceInfo\": {\n                    \"model\": \"HI-GF28FH\"\n                }\n            },\n            {\n                \"id\": \"a00abf1ddb09\",\n                \"type\": \"action.devices.types.AIRPURIFIER\",\n                \"traits\": [\n                    \"action.devices.traits.OnOff\",\n                    \"action.devices.traits.FanSpeed\",\n                    \"action.devices.traits.Toggles\",\n                    \"action.devices.traits.HumiditySetting\",\n                    \"action.devices.traits.TemperatureSetting\",\n                    \"action.devices.traits.SensorState\"\n                ],\n                \"name\": {\n                    \"name\": \"清淨機\"\n                },\n                \"willReportState\": false,\n                \"attributes\": {\n                    \"availableFanSpeeds\": {\n                        \"speeds\": [\n                            {\n                                \"speed_name\": \"speed_low\",\n                                \"speed_values\": {\n                                    \"0\": {\n                                        \"speed_synonym\": [\n                                            \"最低\",\n                                            \"最小\",\n                                            \"最弱\",\n                                            \"低\",\n                                            \"小\",\n                                            \"弱\",\n                                            \"1\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    },\n                                    \"speed_synonym\": [\n                                        \"最低\",\n                                        \"最小\",\n                                        \"最弱\",\n                                        \"低\",\n                                        \"小\",\n                                        \"弱\",\n                                        \"1\"\n                                    ]\n                                }\n                            },\n                            {\n                                \"speed_name\": \"speed_medium\",\n                                \"speed_values\": {\n                                    \"0\": {\n                                        \"speed_synonym\": [\n                                            \"中\",\n                                            \"一般\",\n                                            \"2\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    },\n                                    \"speed_synonym\": [\n                                        \"中\",\n                                        \"一般\",\n                                        \"3\"\n                                    ]\n                                }\n                            },\n                            {\n                                \"speed_name\": \"speed_high\",\n                                \"speed_values\": {\n                                    \"0\": {\n                                        \"speed_synonym\": [\n                                            \"最高\",\n                                            \"最大\",\n                                            \"最強\",\n                                            \"高\",\n                                            \"大\",\n                                            \"強\",\n                                            \"3\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    },\n                                    \"speed_synonym\": [\n                                        \"最高\",\n                                        \"最大\",\n                                        \"最強\",\n                                        \"高\",\n                                        \"大\",\n                                        \"強\",\n                                        \"5\"\n                                    ]\n                                }\n                            },\n                            {\n                                \"speed_name\": \"speed_up\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            \"高一點\",\n                                            \"大一點\",\n                                            \"強一點\",\n                                            \"增加\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_dow\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            \"低一點\",\n                                            \"小一點\",\n                                            \"弱一點\",\n                                            \"減少\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_1\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            1\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_2\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            2\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_3\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            3\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_4\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            4\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_5\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            5\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            }\n                        ]\n                    },\n                    \"queryOnlyHumiditySetting\": true,\n                    \"thermostatTemperatureUnit\": \"C\",\n                    \"queryOnlyTemperatureSetting\": true,\n                    \"sensorStatesSupported\": {\n                        \"name\": \"PM2.5\"\n                    },\n                    \"availableToggles\": [\n                        {\n                            \"name\": \"anion_toggle\",\n                            \"name_values\": [\n                                {\n                                    \"name_synonym\": [\n                                        \"負離子\"\n                                    ],\n                                    \"lang\": \"zh\"\n                                }\n                            ]\n                        },\n                        {\n                            \"name\": \"auto_mode\",\n                            \"name_values\": [\n                                {\n                                    \"name_synonym\": [\n                                        \"自動\",\n                                        \"自動模式\"\n                                    ],\n                                    \"lang\": \"zh\"\n                                }\n                            ]\n                        }\n                    ]\n                },\n                \"deviceInfo\": {\n                    \"model\": \"HAP-620B1\"\n                }\n            },\n            {\n                \"id\": \"a00abf1ddb37\",\n                \"type\": \"action.devices.types.FAN\",\n                \"traits\": [\n                    \"action.devices.traits.OnOff\",\n                    \"action.devices.traits.FanSpeed\",\n                    \"action.devices.traits.Modes\",\n                    \"action.devices.traits.Toggles\"\n                ],\n                \"name\": {\n                    \"name\": \"風扇\"\n                },\n                \"willReportState\": false,\n                \"attributes\": {\n                    \"availableFanSpeeds\": {\n                        \"speeds\": [\n                            {\n                                \"speed_name\": \"speed_low\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            \"最低\",\n                                            \"最小\",\n                                            \"最弱\",\n                                            \"低\",\n                                            \"小\",\n                                            \"弱\",\n                                            \"1\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_medium\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            \"中\",\n                                            \"一般\",\n                                            \"12\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_high\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            \"最高\",\n                                            \"最大\",\n                                            \"最強\",\n                                            \"高\",\n                                            \"大\",\n                                            \"強\",\n                                            \"24\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_up\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            \"高一點\",\n                                            \"大一點\",\n                                            \"強一點\",\n                                            \"增加\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_dow\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            \"低一點\",\n                                            \"小一點\",\n                                            \"弱一點\",\n                                            \"減少\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_2\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            2\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_3\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            3\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_4\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            4\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_5\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            5\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_6\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            6\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_7\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            7\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_8\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            8\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_9\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            9\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_10\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            10\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_11\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            11\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_13\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            13\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_14\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            14\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_15\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            15\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_16\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            16\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_17\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            17\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_18\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            18\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_19\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            19\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_20\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            20\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_21\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            21\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_22\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            22\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_23\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            23\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            }\n                        ]\n                    },\n                    \"availableModes\": {\n                        \"name\": \"fan_mode\",\n                        \"name_values\": [\n                            {\n                                \"name_synonym\": [\n                                    \"模式\"\n                                ],\n                                \"lang\": \"zh\"\n                            }\n                        ],\n                        \"settings\": [\n                            {\n                                \"setting_name\": \"sleepn_mode\",\n                                \"setting_values\": [\n                                    {\n                                        \"setting_synonym\": [\n                                            \"睡眠模式\",\n                                            \"睡覺模式\",\n                                            \"舒眠模式\",\n                                            \"睡眠\",\n                                            \"睡覺\",\n                                            \"舒眠\",\n                                            \"睡眠風\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"setting_name\": \"normal_mode\",\n                                \"setting_values\": [\n                                    {\n                                        \"setting_synonym\": [\n                                            \"一般風\",\n                                            \"一般\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"setting_name\": \"naturaln_mode\",\n                                \"setting_values\": [\n                                    {\n                                        \"setting_synonym\": [\n                                            \"自然風\",\n                                            \"自然\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            }\n                        ]\n                    },\n                    \"availableToggles\": [\n                        {\n                            \"name\": \"turn_toggle\",\n                            \"name_values\": [\n                                {\n                                    \"name_synonym\": [\n                                        \"擺動\",\n                                        \"擺頭\",\n                                        \"轉動\"\n                                    ],\n                                    \"lang\": \"zh\"\n                                }\n                            ]\n                        }\n                    ]\n                },\n                \"deviceInfo\": {\n                    \"model\": \"HDF-14AH71W\"\n                },\n                \"livingspace\": \"01\"\n            },\n            {\n                \"id\": \"a00abf394b1c\",\n                \"type\": \"action.devices.types.FAN\",\n                \"traits\": [\n                    \"action.devices.traits.OnOff\",\n                    \"action.devices.traits.FanSpeed\",\n                    \"action.devices.traits.Modes\",\n                    \"action.devices.traits.Toggles\"\n                ],\n                \"name\": {\n                    \"name\": \"風扇\"\n                },\n                \"willReportState\": false,\n                \"attributes\": {\n                    \"availableFanSpeeds\": {\n                        \"speeds\": [\n                            {\n                                \"speed_name\": \"speed_low\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            \"最低\",\n                                            \"最小\",\n                                            \"最弱\",\n                                            \"低\",\n                                            \"小\",\n                                            \"弱\",\n                                            \"1\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_medium\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            \"中\",\n                                            \"一般\",\n                                            \"12\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_high\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            \"最高\",\n                                            \"最大\",\n                                            \"最強\",\n                                            \"高\",\n                                            \"大\",\n                                            \"強\",\n                                            \"24\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_up\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            \"高一點\",\n                                            \"大一點\",\n                                            \"強一點\",\n                                            \"增加\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_dow\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            \"低一點\",\n                                            \"小一點\",\n                                            \"弱一點\",\n                                            \"減少\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_2\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            2\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_3\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            3\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_4\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            4\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_5\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            5\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_6\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            6\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_7\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            7\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_8\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            8\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_9\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            9\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_10\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            10\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_11\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            11\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_13\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            13\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_14\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            14\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_15\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            15\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_16\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            16\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_17\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            17\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_18\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            18\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_19\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            19\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_20\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            20\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_21\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            21\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_22\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            22\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"speed_name\": \"speed_23\",\n                                \"speed_values\": [\n                                    {\n                                        \"speed_synonym\": [\n                                            23\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            }\n                        ]\n                    },\n                    \"availableModes\": {\n                        \"name\": \"fan_mode\",\n                        \"name_values\": [\n                            {\n                                \"name_synonym\": [\n                                    \"模式\"\n                                ],\n                                \"lang\": \"zh\"\n                            }\n                        ],\n                        \"settings\": [\n                            {\n                                \"setting_name\": \"sleepn_mode\",\n                                \"setting_values\": [\n                                    {\n                                        \"setting_synonym\": [\n                                            \"睡眠模式\",\n                                            \"睡覺模式\",\n                                            \"舒眠模式\",\n                                            \"睡眠\",\n                                            \"睡覺\",\n                                            \"舒眠\",\n                                            \"睡眠風\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"setting_name\": \"normal_mode\",\n                                \"setting_values\": [\n                                    {\n                                        \"setting_synonym\": [\n                                            \"一般風\",\n                                            \"一般\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            },\n                            {\n                                \"setting_name\": \"naturaln_mode\",\n                                \"setting_values\": [\n                                    {\n                                        \"setting_synonym\": [\n                                            \"自然風\",\n                                            \"自然\"\n                                        ],\n                                        \"lang\": \"zh\"\n                                    }\n                                ]\n                            }\n                        ]\n                    },\n                    \"availableToggles\": [\n                        {\n                            \"name\": \"turn_toggle\",\n                            \"name_values\": [\n                                {\n                                    \"name_synonym\": [\n                                        \"擺動\",\n                                        \"擺頭\",\n                                        \"轉動\"\n                                    ],\n                                    \"lang\": \"zh\"\n                                }\n                            ]\n                        }\n                    ]\n                },\n                \"deviceInfo\": {\n                    \"model\": \"HDF-14AH71W\"\n                },\n                \"livingspace\": \"01\"\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "總-QUERY(succeed)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\r\n  \"inputs\": [\r\n    {\r\n      \"intent\": \"action.devices.QUERY\",\r\n      \"payload\": {\r\n        \"devices\": [\r\n          {\r\n            \"id\": \"a00abf1dd7e7\",\r\n            \"customData\": {\r\n            }\r\n          },\r\n          {\r\n            \"id\": \"a00abf1ddb09\",\r\n            \"customData\": {\r\n            }\r\n          },\r\n          {\r\n            \"id\": \"a00abf1ddb37\",\r\n            \"customData\": {\r\n            }\r\n          },\r\n          {\r\n            \"id\": \"a00abf394b1c\",\r\n            \"customData\": {\r\n            }\r\n          },\r\n          {\r\n            \"id\": \"54752861b4e62d526cdb\",\r\n            \"customData\": {\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://iot.jowinwin.com/iot_tds/control.php",
+							"protocol": "https",
+							"host": [
+								"iot",
+								"jowinwin",
+								"com"
+							],
+							"path": [
+								"iot_tds",
+								"control.php"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "總-QUERY",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer 3ca023a32a2249a00fa8282a0686e30acdb8cfd5",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\r\n  \"inputs\": [\r\n    {\r\n      \"intent\": \"action.devices.QUERY\",\r\n      \"payload\": {\r\n        \"devices\": [\r\n          {\r\n            \"id\": \"a00abf1dd7e7\",\r\n            \"customData\": {\r\n            }\r\n          },\r\n          {\r\n            \"id\": \"a00abf1ddb09\",\r\n            \"customData\": {\r\n            }\r\n          },\r\n          {\r\n            \"id\": \"a00abf1ddb37\",\r\n            \"customData\": {\r\n            }\r\n          },\r\n          {\r\n            \"id\": \"a00abf394b1c\",\r\n            \"customData\": {\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}"
+								},
+								"url": {
+									"raw": "https://iot.jowinwin.com/iot_tds/control.php",
+									"protocol": "https",
+									"host": [
+										"iot",
+										"jowinwin",
+										"com"
+									],
+									"path": [
+										"iot_tds",
+										"control.php"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 01 Jan 2022 18:56:45 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.18 (Ubuntu)"
+								},
+								{
+									"key": "Content-Length",
+									"value": "929"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\n    \"payload\": {\n        \"devices\": [\n            {\n                \"a00abf1dd7e7\": {\n                    \"status\": \"SUCCESS\",\n                    \"online\": true,\n                    \"on\": false,\n                    \"thermostatTemperatureAmbient\": 25,\n                    \"thermostatTemperatureSetpoint\": 25,\n                    \"currentFanSpeedSetting\": \"speed_auto\",\n                    \"thermostatMode\": \"cool\"\n                }\n            },\n            {\n                \"a00abf1ddb09\": {\n                    \"status\": \"SUCCESS\",\n                    \"online\": true,\n                    \"on\": false,\n                    \"currentFanSpeedSetting\": \"error\",\n                    \"currentToggleSettings\": {\n                        \"anion_toggle\": false,\n                        \"auto_mode\": false\n                    },\n                    \"thermostatTemperatureAmbient\": \"19\",\n                    \"humidityAmbientPercent\": \"00\",\n                    \"currentSensorStateData\": [\n                        {\n                            \"name\": \"PM2.5\",\n                            \"rawValue\": 3\n                        }\n                    ]\n                }\n            },\n            {\n                \"a00abf1ddb37\": {\n                    \"status\": \"SUCCESS\",\n                    \"online\": false,\n                    \"on\": false,\n                    \"currentFanSpeedSetting\": \"3\",\n                    \"currentModeSettings\": {\n                        \"fan_mode\": \"normal_mode\"\n                    },\n                    \"currentToggleSettings\": {\n                        \"turn_toggle\": false\n                    }\n                }\n            },\n            {\n                \"a00abf394b1c\": {\n                    \"status\": \"SUCCESS\",\n                    \"online\": true,\n                    \"on\": false,\n                    \"currentFanSpeedSetting\": \"3\",\n                    \"currentModeSettings\": {\n                        \"fan_mode\": \"normal_mode\"\n                    },\n                    \"currentToggleSettings\": {\n                        \"turn_toggle\": false\n                    }\n                }\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "總-控制-電扇開關(succeed)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\r\n  \"inputs\": [\r\n    {\r\n      \"intent\": \"action.devices.EXECUTE\",\r\n      \"payload\": {\r\n        \"commands\": [\r\n          {\r\n            \"devices\": [\r\n              {\r\n                \"id\": \"a00abf394b1c\"\r\n              }\r\n            ],\r\n            \"execution\": [\r\n              {\r\n                \"command\": \"action.devices.commands.OnOff\",\r\n                \"params\": {\r\n                  \"on\": false\r\n                }\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://iot.jowinwin.com/iot_tds/control.php",
+							"protocol": "https",
+							"host": [
+								"iot",
+								"jowinwin",
+								"com"
+							],
+							"path": [
+								"iot_tds",
+								"control.php"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "總-控制",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer b45db577fc9e59d4079f53858798241b138df4ca",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\r\n  \"inputs\": [\r\n    {\r\n      \"intent\": \"action.devices.EXECUTE\",\r\n      \"payload\": {\r\n        \"commands\": [\r\n          {\r\n            \"devices\": [\r\n              {\r\n                \"id\": \"a00abf394b1c\",\r\n                \"customData\": {\r\n                }\r\n              }\r\n            ],\r\n            \"execution\": [\r\n              {\r\n                \"command\": \"action.devices.commands.OnOff\",\r\n                \"params\": {\r\n                  \"on\": false\r\n                }\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://iot.jowinwin.com/iot_tds/control.php",
+									"protocol": "https",
+									"host": [
+										"iot",
+										"jowinwin",
+										"com"
+									],
+									"path": [
+										"iot_tds",
+										"control.php"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 01 Jan 2022 19:17:18 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.18 (Ubuntu)"
+								},
+								{
+									"key": "Content-Length",
+									"value": "143"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\n    \"payload\": {\n        \"commands\": [\n            {\n                \"ids\": [\n                    \"a00abf394b1c\"\n                ],\n                \"status\": \"SUCCESS\",\n                \"states\": {\n                    \"on\": false\n                }\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "總-控制-電扇風量(succeed)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\r\n  \"inputs\": [\r\n    {\r\n      \"intent\": \"action.devices.EXECUTE\",\r\n      \"payload\": {\r\n        \"commands\": [\r\n          {\r\n            \"devices\": [\r\n              {\r\n                \"id\": \"a00abf394b1c\"\r\n              }\r\n            ],\r\n            \"execution\": [\r\n              {\r\n                \"command\": \"action.devices.commands.SetFanSpeed\",\r\n                \"params\": {\r\n                  \"fanSpeed\": \"speed_3\"\r\n                }\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://iot.jowinwin.com/iot_tds/control.php",
+							"protocol": "https",
+							"host": [
+								"iot",
+								"jowinwin",
+								"com"
+							],
+							"path": [
+								"iot_tds",
+								"control.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "總-控制-電扇搖頭(succeed)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\r\n  \"inputs\": [\r\n    {\r\n      \"intent\": \"action.devices.EXECUTE\",\r\n      \"payload\": {\r\n        \"commands\": [\r\n          {\r\n            \"devices\": [\r\n              {\r\n                \"id\": \"a00abf394b1c\"\r\n              }\r\n            ],\r\n            \"execution\": [\r\n              {\r\n                \"command\": \"action.devices.commands.SetToggles\",\r\n                \"params\": {\r\n                  \"updateToggleSettings\": {\r\n                    \"turn_toggle\": false\r\n                  }\r\n                }\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://iot.jowinwin.com/iot_tds/control.php",
+							"protocol": "https",
+							"host": [
+								"iot",
+								"jowinwin",
+								"com"
+							],
+							"path": [
+								"iot_tds",
+								"control.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "總-控制-冷氣開關(succeed)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\r\n  \"inputs\": [\r\n    {\r\n      \"intent\": \"action.devices.EXECUTE\",\r\n      \"payload\": {\r\n        \"commands\": [\r\n          {\r\n            \"devices\": [\r\n              {\r\n                \"id\": \"a00abf1dd7e7\"\r\n              }\r\n            ],\r\n            \"execution\": [\r\n              {\r\n                \"command\": \"action.devices.commands.OnOff\",\r\n                \"params\": {\r\n                  \"on\": false\r\n                }\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://iot.jowinwin.com/iot_tds/control.php",
+							"protocol": "https",
+							"host": [
+								"iot",
+								"jowinwin",
+								"com"
+							],
+							"path": [
+								"iot_tds",
+								"control.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "總-控制-冷氣溫度設定(succeed)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\r\n  \"inputs\": [\r\n    {\r\n      \"intent\": \"action.devices.EXECUTE\",\r\n      \"payload\": {\r\n        \"commands\": [\r\n          {\r\n            \"devices\": [\r\n              {\r\n                \"id\": \"a00abf1dd7e7\"\r\n              }\r\n            ],\r\n            \"execution\": [\r\n              {\r\n                \"command\": \"action.devices.commands.ThermostatTemperatureSetpoint\",\r\n                \"params\": {\r\n                  \"thermostatTemperatureSetpoint\": 25\r\n                }\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://iot.jowinwin.com/iot_tds/control.php",
+							"protocol": "https",
+							"host": [
+								"iot",
+								"jowinwin",
+								"com"
+							],
+							"path": [
+								"iot_tds",
+								"control.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "總-控制-掃地機開關(succeed)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\r\n  \"inputs\": [\r\n    {\r\n      \"intent\": \"action.devices.EXECUTE\",\r\n      \"payload\": {\r\n        \"commands\": [\r\n          {\r\n            \"devices\": [\r\n              {\r\n                \"id\": \"54752861b4e62d526cdb\"\r\n              }\r\n            ],\r\n            \"execution\": [\r\n              {\r\n                \"command\": \"action.devices.commands.StartStop\",\r\n                \"params\": {\r\n                  \"start\": false\r\n                }\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://iot.jowinwin.com/iot_tds/control.php",
+							"protocol": "https",
+							"host": [
+								"iot",
+								"jowinwin",
+								"com"
+							],
+							"path": [
+								"iot_tds",
+								"control.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "總-控制-掃地機回家(succeed)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\r\n  \"inputs\": [\r\n    {\r\n      \"intent\": \"action.devices.EXECUTE\",\r\n      \"payload\": {\r\n        \"commands\": [\r\n          {\r\n            \"devices\": [\r\n              {\r\n                \"id\": \"54752861b4e62d526cdb\"\r\n              }\r\n            ],\r\n            \"execution\": [\r\n              {\r\n                \"command\": \"action.devices.commands.Dock\",\r\n                \"params\": {}\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://iot.jowinwin.com/iot_tds/control.php",
+							"protocol": "https",
+							"host": [
+								"iot",
+								"jowinwin",
+								"com"
+							],
+							"path": [
+								"iot_tds",
+								"control.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "總-控制-掃地機關且回家",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"requestId\": \"ff36a3cc-ec34-11e6-b1a0-64510650abcf\",\r\n  \"inputs\": [\r\n    {\r\n      \"intent\": \"action.devices.EXECUTE\",\r\n      \"payload\": {\r\n        \"commands\": [\r\n          {\r\n            \"devices\": [\r\n              {\r\n                \"id\": \"54752861b4e62d526cdb\"\r\n              }\r\n            ],\r\n            \"execution\": [\r\n              {\r\n                \"command\": \"action.devices.commands.StartStop\",\r\n                \"params\": {\r\n                  \"start\": false\r\n                }\r\n              },\r\n              {\r\n                \"command\": \"action.devices.commands.Dock\",\r\n                \"params\": {}\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://iot.jowinwin.com/iot_tds/control.php",
+							"protocol": "https",
+							"host": [
+								"iot",
+								"jowinwin",
+								"com"
+							],
+							"path": [
+								"iot_tds",
+								"control.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "access_code",
+			"value": "Bearer c63c609b74297132d7f8ffcd238bcc366cf60e98"
+		}
+	]
+}
