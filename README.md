@@ -1,5 +1,7 @@
 # "LINE BOT" 結合 "禾聯物聯網智慧家電" 解決方案
 
+Final Project for: 物聯網導論 | Introduction to the Internet of Things | NTU | 吳瑞北教授 | 2021 Fall
+
 ## Framework
 
 ![framework](https://user-images.githubusercontent.com/57071722/152819616-0091c2d1-f90e-4e3b-b696-96fcd5411763.jpg)
